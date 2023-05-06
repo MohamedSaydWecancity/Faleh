@@ -13,6 +13,8 @@
 
 export const environment = {
   production: false
-  , serverUrl: 'http://falehapi.wecancity.com/ar'
+  , serverUrl: 'https://falehapi.wecancity.com/api/ar'
+  ,serverMotim:'https://motimback.wecancity.com/api/en'
+  //http://falehapi.wecancity.com/swagger/index.html
 
 };

@@ -17,19 +17,19 @@ data:object;
 
     applytheoffer(data: any):Observable<any>{
       console.log(data);
-    return this._HttpClient.post(`${environment.Server_URL}/Shipment/ApprovedOffer`, data);
+    return this._HttpClient.post(`${environment.serverUrl}/Shipment/ApprovedOffer`, data);
 
   }
 
   
     canceltheoffer(data: any ):Observable<any>{
       console.log(data);
-    return this._HttpClient.post(`${environment.Server_URL}/Shipment/CancelOffer`, data);
+    return this._HttpClient.post(`${environment.serverUrl}/Shipment/CancelOffer`, data);
 
   }
     cancelreasons():Observable<any>{
       
-    return this._HttpClient.get(`${environment.Server_URL}/ShipmentCancelationReason/GetAllForList`);
+    return this._HttpClient.get(`${environment.serverUrl}/ShipmentCancelationReason/GetAllForList`);
 
   }
 } 

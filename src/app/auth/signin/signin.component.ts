@@ -22,8 +22,12 @@ export class SigninComponent implements OnInit {
     /**
      * Bootstrap validation form data
      */
+    
+    // var re=this._LoginService.test_server().subscribe((res)=>{
+    //   //Mahmoud
+    // })
      this.validationform = this.formBuilder.group({
-      userName: ['', [Validators.required]],
+      username: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
   }
@@ -39,19 +43,30 @@ export class SigninComponent implements OnInit {
   * Bootsrap validation form submit method
   */
    validSubmit() {
-    this.submit = true;
+    // this.submit = true;
+    
+    // // this._LoginService.getTests().subscribe((res)=>{
+    // //   console.log(10)
+    // //   console.log('res');
+    // //   //Mahmoud
+    // // })
+    // this._LoginService.user_login(this.validationform.value).subscribe((res)=>{
+    //   //console.log(res);
+    //   //Mahmoud
+    // })
     this._LoginService.user_login(this.validationform.value).subscribe((res) => {
-      
       console.log(res);
-      // Swal.fire({
-      //   icon: "success",
-      //   title: "Signed in successfully",
-      //   showConfirmButton: false,
-      //   timer: 1500,
-      // });
+      Swal.fire({
+        icon: "success",
+        title: "Signed in successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       localStorage.setItem('Authorization',res.data["token"]);
-      localStorage.setItem('UserName',res.data["name"]);
-      this._Router.navigate(["home"]);
+      localStorage.setItem('username', res.data["name"])
+      this._LoginService.Data.next(res);
+      this._Router.navigate(["/content/admin"]);
+
 },(err) =>{
 console.log("their is an error");
 Swal.fire({
@@ -63,7 +78,9 @@ Swal.fire({
   console.log("completed");
   
 });
+
 }
+
 
 
 get form() {

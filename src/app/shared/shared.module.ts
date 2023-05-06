@@ -48,7 +48,6 @@ import { DisableWeritingArabicDirective } from './directives/disable-weriting-ar
 import { ExpPipe } from './Pipes/exp.pipe';
 
 import { HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './Models/login/login.component';
 
 import { CheckDateComponent } from './components/check-date/check-date.component';
 
@@ -82,7 +81,6 @@ import { CheckDateComponent } from './components/check-date/check-date.component
  
     ExpPipe,
 
-    LoginComponent,
        CheckDateComponent,
 
   ],

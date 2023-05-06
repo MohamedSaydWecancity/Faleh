@@ -22,12 +22,7 @@ export const environment = {
     messagingSenderId: "Your Sender Id"
   },
 
-
-
-  // Server_URL:'https://localhost:7296/api'
-  // Server_URL:'https://riskdevapi.wecancity.com/api',
-     Server_URL:`http://falehapi.wecancity.com`
-      //const Server_URL='http://falehapi.wecancity.com'
+   serverUrl: 'http://falehapi.wecancity.com/api/ar'
 
 
  

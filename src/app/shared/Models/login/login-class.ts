@@ -1,6 +1,5 @@
-export class LoginClass {
-    id?:number;
-    mobile:string;
+export interface LoginDto {
+    username:string,
     password:string
     //  roleId:number
 }

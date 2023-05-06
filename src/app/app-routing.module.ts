@@ -9,7 +9,7 @@ import { IsNotLoginGuard } from "./shared/guard/is-not-login.guard";
 import { ViewProductComponent } from "./components/admin/product/view-product/view-product.component";
 
 // login
-import { LoginComponent } from "./shared/Models/login/login.component";
+import { SigninComponent } from "./auth/signin/signin.component";
  
 
 const routes: Routes = [
@@ -42,14 +42,14 @@ const routes: Routes = [
   // },
   {
     path: "login",
-    component: LoginComponent,
-    canActivate: [IsNotLoginGuard],
+    component: SigninComponent,
+    // canActivate: [IsNotLoginGuard],
     children: content,
   },
   {
     path: "content",
     component: ContentComponent,
-    canActivate: [IsLoginGuard],
+    // canActivate: [IsLoginGuard],
     children: content,
   },
   // {
@@ -57,6 +57,7 @@ const routes: Routes = [
   //   redirectTo: ''
   // }
 ];
+
 
 @NgModule({
   imports: [

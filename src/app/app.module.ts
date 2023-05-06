@@ -30,7 +30,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { DatePipe } from "@angular/common";
 
  import { NgxPaginationModule } from "ngx-pagination";
-import { SigninComponent } from './auth/signin/signin/signin.component';
+import { SigninComponent } from '../app/auth/signin/signin.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");

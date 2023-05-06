@@ -12,15 +12,15 @@ export class InsertemployeeService {
 
   insertemployee(employeedata:any):Observable<any>{
     console.log(employeedata);
-  return this._HttpClient.post(`${environment.Server_URL}/Company/CreateCompanyEmployee`, employeedata);
+  return this._HttpClient.post(`${environment.serverUrl}/Company/CreateCompanyEmployee`, employeedata);
 
 }
 update(employeeid:any):Observable<any>{
-  return this._HttpClient.post(`${environment.Server_URL}/Company/UpdateCompanyEmployee`, employeeid);
+  return this._HttpClient.post(`${environment.serverUrl}/Company/UpdateCompanyEmployee`, employeeid);
 }
 
 getemployee():Observable<any>{
-  return this._HttpClient.get(`${environment.Server_URL}/Company/GetCompanyEmployees`);
+  return this._HttpClient.get(`${environment.serverUrl}/Company/GetCompanyEmployees`);
 }
 } 
 

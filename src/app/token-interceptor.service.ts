@@ -13,7 +13,11 @@ export class TokenInterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     
     let token = localStorage.getItem('Authorization');
-    if (token) {
+    console.log(token );
+    
+
+    if (token !=null) {
+      alert(120)
       req = req.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
