@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GenericResponse } from '../../Models/GenericResponse/GenericResponse';
 import { Observable } from 'rxjs/internal/Observable';
-import {CreateOrUpdateKeyword, GetKeyword, GetKeywordById, GetKeywordList}from '../../Models/Keyword/Keyword'
+import {CreateOrUpdateKeyword, GetKeyword, GetKeywordAllForList, GetKeywordById, GetKeywordList}from '../../Models/Keyword/Keyword'
 import { PagintationModel } from '../../Models/PaginationModel/PagintationModel';
 import { environment } from 'src/environments/environment';
 
@@ -26,6 +26,9 @@ export class KeywordApiService {
   }
   getKeyWordList(modle:PagintationModel ): Observable<GenericResponse<GetKeywordList>> {
     return this.http.post<GenericResponse<GetKeywordList>>(`${environment.serverUrl}/KeyWord/GetKeyWordList`,modle)
+  }
+  getKeyWordAllForList(): Observable<GenericResponse<GetKeywordAllForList[]>> {
+    return this.http.get<GenericResponse<GetKeywordAllForList[]>>(`${environment.serverUrl}/KeyWord/GetAllForList`);
   }
  
   deleteKeyword(KeywordId:number) : Observable<GenericResponse<{}>> {

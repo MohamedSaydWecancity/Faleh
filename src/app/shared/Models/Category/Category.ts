@@ -22,3 +22,8 @@ export interface GetCategoryList
     totalCount:number
     items:GetCategory[]
 }
+export interface GetCategoryAllForList
+{
+    id:number;
+    title: string;
+}

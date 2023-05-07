@@ -22,3 +22,8 @@ export interface GetKeywordList
     totalCount:number
     items:GetKeyword[]
 }
+export interface GetKeywordAllForList 
+{
+    id:number;
+    title: string;
+}

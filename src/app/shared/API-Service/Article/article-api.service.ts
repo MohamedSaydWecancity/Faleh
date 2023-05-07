@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { GenericResponse } from '../../Models/GenericResponse/GenericResponse';
 import{PagintationModel} from '../../Models/PaginationModel/PagintationModel'
 import {CreateOrUpdateArticle, GetArticle, GetArticleById, GetArticleList  } from '../../Models/Article/Article';
+import { BehaviorSubject } from 'rxjs';
 
 
 
@@ -12,7 +13,8 @@ import {CreateOrUpdateArticle, GetArticle, GetArticleById, GetArticleList  } fro
   providedIn: 'root'
 })
 export class ArticleApiService {
-
+  public Data=new BehaviorSubject(null);
+  pageNumber: number = 1;
   constructor(private http :HttpClient) { }
   createArticle(data:FormData): Observable<GenericResponse<GetArticle>> {
     return this.http.post<GenericResponse<GetArticle>>(`${environment.serverUrl}/Article/Create`,data)
@@ -27,6 +29,7 @@ export class ArticleApiService {
   }
   getArticleList(modle:PagintationModel ): Observable<GenericResponse<GetArticleList>> {
     return this.http.post<GenericResponse<GetArticleList>>(`${environment.serverUrl}/Article/GetArticleList`,modle)
+    
   }
  
   deleteArticle(acticleId:number) : Observable<GenericResponse<{}>> {

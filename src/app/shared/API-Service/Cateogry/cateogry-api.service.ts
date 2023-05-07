@@ -2,9 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { GenericResponse } from '../../Models/GenericResponse/GenericResponse';
-import{ CreateOrUpdateCategory, GetCategory, GetCategoryById, GetCategoryList } from '../../Models/Category/category'
+import{ CreateOrUpdateCategory, GetCategory, GetCategoryAllForList, GetCategoryById, GetCategoryList } from '../../Models/Category/category'
 import { environment } from 'src/environments/environment';
 import { PagintationModel } from '../../Models/PaginationModel/PagintationModel';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,9 @@ import { PagintationModel } from '../../Models/PaginationModel/PagintationModel'
 export class CateogryApiService {
 
   constructor(private http :HttpClient) { }
+  public Data=new BehaviorSubject(null);
+  pageNumber: number = 1;
+  category:any;
   createCategory(data :CreateOrUpdateCategory): Observable<GenericResponse<GetCategory>> {
     return this.http.post<GenericResponse<GetCategory>>(`${environment.serverUrl}/Category/Create`,data)
   
@@ -26,7 +30,9 @@ export class CateogryApiService {
   getCategoryList(modle:PagintationModel ): Observable<GenericResponse<GetCategoryList>> {
     return this.http.post<GenericResponse<GetCategoryList>>(`${environment.serverUrl}/Category/GetCategoryList`,modle)
   }
- 
+  getCategoryAllForList(): Observable<GenericResponse<GetCategoryAllForList[]>> {
+    return this.http.get<GenericResponse<GetCategoryAllForList[]>>(`${environment.serverUrl}/Category/GetAllForList`);
+  }
   deleteCategory(acticleId:number) : Observable<GenericResponse<{}>> {
     return this.http.get<GenericResponse<{}>>(`${environment.serverUrl}/Category/Delete?id=${acticleId}`)
   }

@@ -30,7 +30,10 @@ import { CookieService } from 'ngx-cookie-service'
 
 import { DxReportViewerModule } from 'devexpress-reporting-angular';
 import { ViewProductComponent } from './product/view-product/view-product.component';
-import { ArticleComponent } from './article/article.component';
+import { InsertArticleComponent } from './article/insert-article/insert-article.component';
+import { ListArticleComponent } from './article/list-article/list-article.component';
+import { InsertCategoryComponent } from './category/insert-category/insert-category.component';
+import { ListCategoryComponent } from './category/list-category/list-category.component';
 
 
 
@@ -38,7 +41,11 @@ import { ArticleComponent } from './article/article.component';
  @NgModule({
   declarations: [
     ViewProductComponent,
-    ArticleComponent,
+    InsertArticleComponent,
+    ListArticleComponent,
+    InsertCategoryComponent,
+    ListCategoryComponent,
+    
     
   ],
   imports: [
