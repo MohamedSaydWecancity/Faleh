@@ -1,31 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import { CateogryApiService } from 'src/app/shared/API-Service/Cateogry/cateogry-api.service';
+import { KeywordApiService } from 'src/app/shared/API-Service/Keyword/keyword-api.service';
 import { PaginationComponent } from 'src/app/shared/Models/PaginationModel/PagintationModel';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-list-category',
-  templateUrl: './list-category.component.html',
-  styleUrls: ['./list-category.component.css']
+  selector: 'app-list-keyword',
+  templateUrl: './list-keyword.component.html',
+  styleUrls: ['./list-keyword.component.css']
 })
-export class ListCategoryComponent extends PaginationComponent implements OnInit {
+export class ListKeywordComponent  extends PaginationComponent  implements OnInit {
+ //#region  Declare Variables
+ response: any[];
 
-   //#region  Declare Variables
-   response: any[];
+ KeywordList:any[];// GenericResponse<GetKeywordAllForList[]>;
 
- 
- 
-   Cateogy_List: any[];
-   dropdownSettings: IDropdownSettings = {};
- 
-   //#endregion
- 
-  constructor(private cateogryApiService: CateogryApiService,private router: Router) { super()}
+ dropdownSettings: IDropdownSettings = {};
+
+ //#endregion
+  constructor(private keywordApiService: KeywordApiService,private router: Router) {super(); }
 
   ngOnInit(): void {
-    this.getCategories();
+    this.getKeyword();
     this.dropdownSettings = {
       singleSelection: true,
       idField: 'id',
@@ -35,48 +32,36 @@ export class ListCategoryComponent extends PaginationComponent implements OnInit
       itemsShowLimit: 3,
       allowSearchFilter: true
     };
+    
   }
-  getCategories()
+  getKeyword()
   {
-    this.cateogryApiService.getCategoryList(this.pager).subscribe(
+    this.keywordApiService.getKeyWordList(this.pager).subscribe(
       (response: any) => {
         this.response = response.data;
-        this.Cateogy_List = response.data.items;
+        this.KeywordList = response.data.items;
         this.totalCount = response.totalCount
       }
     )
   }
  
   AddNew() {
-    this.router.navigateByUrl("content/admin/insert-category");
+    this.router.navigateByUrl("content/admin/insert-keyword");
   }
 
-  // update(id: number) {
+  update(id: number) {
 
     
-  //  this.cateogryApiService.getCategoryById(id).subscribe((res)=>{
-  //   this.cateogryApiService.Data.next(res.data);
+  //  this.keywordApiService.getArticleById(id).subscribe((res)=>{
+  //   this.articleApiService.Data.next(res.data);
   //  })
-  //  this.router.navigateByUrl("content/admin/insert-category");
-
-  // }
-  // update(item: any) {
-  //   this.cateogryApiService.category = item;
-  //   this.router.navigate(['content/admin/update-category', item.id]);
-
-  // }
-  update(categoryId: any) {
-    // this.cateogryApiService.getCategoryById(category.id).subscribe((res)=>{
-    //   this.cateogryApiService.category = res.data;
-    // })
-    alert(categoryId)
-    this.router.navigateByUrl("content/admin/update-category",categoryId);
+   this.router.navigateByUrl("content/admin/insert-keyword");
 
   }
   pageChanged(event: any) {
     this.pageNumber = event.page;// -1 * pageSize;
     this.pager.skipCount = (this.pageNumber - 1) * this.pager.maxResultCount;
-    this.getCategories();
+    this.getKeyword();
   }
   delete(id : number){
     Swal.fire({
@@ -90,14 +75,14 @@ export class ListCategoryComponent extends PaginationComponent implements OnInit
       confirmButtonText: 'امسح العنصر !'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.cateogryApiService.deleteCategory(id).subscribe((res) => {
+        this.keywordApiService.deleteKeyword(id).subscribe((res) => {
           Swal.fire({
             icon: "success",
             title: "تم المسح بنجاح",
             showConfirmButton: false,
             timer: 1500,
           });
-       this.getCategories();
+       this.getKeyword();
         },(err) => {
           Swal.fire({
             icon: 'error',
@@ -110,6 +95,4 @@ export class ListCategoryComponent extends PaginationComponent implements OnInit
       }
     }) 
   }
-
-
 }

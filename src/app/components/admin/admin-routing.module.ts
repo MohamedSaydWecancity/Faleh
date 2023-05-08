@@ -9,6 +9,8 @@ import { ListArticleComponent } from "./article/list-article/list-article.compon
 import { InsertArticleComponent } from "./article/insert-article/insert-article.component";
 import { ListCategoryComponent } from "./category/list-category/list-category.component";
 import { InsertCategoryComponent } from "./category/insert-category/insert-category.component";
+import { ListKeywordComponent } from "./keyword/list-keyword/list-keyword.component";
+import { InsertKeywordComponent } from "./keyword/insert-keyword/insert-keyword.component";
 
 
 
@@ -37,14 +39,26 @@ const routes: Routes = [
             component:ListCategoryComponent
            },
            {
-            path: "insert-category",
-            component: InsertCategoryComponent,
-        },
+            path: 'content/admin/update-category/:categoryId',
+            component: InsertCategoryComponent
+          },
+          {
+            path: 'content/admin/insert-category',
+            component: InsertCategoryComponent
+          }  
+          ,
         {
-            path: "update-category",
-            component: InsertCategoryComponent,
-        },
-            
+            path :"ListKeyword",
+            component:ListKeywordComponent
+           },
+           {
+            path: 'content/admin/update-keyword/:keywordId',
+            component: InsertKeywordComponent
+          },
+          {
+            path: 'content/admin/insert-keyword',
+            component: InsertKeywordComponent
+          }
            
 ],
     },

@@ -34,6 +34,8 @@ import { InsertArticleComponent } from './article/insert-article/insert-article.
 import { ListArticleComponent } from './article/list-article/list-article.component';
 import { InsertCategoryComponent } from './category/insert-category/insert-category.component';
 import { ListCategoryComponent } from './category/list-category/list-category.component';
+import { ListKeywordComponent } from './keyword/list-keyword/list-keyword.component';
+import { InsertKeywordComponent } from './keyword/insert-keyword/insert-keyword.component';
 
 
 
@@ -45,6 +47,8 @@ import { ListCategoryComponent } from './category/list-category/list-category.co
     ListArticleComponent,
     InsertCategoryComponent,
     ListCategoryComponent,
+    ListKeywordComponent,
+    InsertKeywordComponent,
     
     
   ],

@@ -11,7 +11,8 @@ import { environment } from 'src/environments/environment';
 })
 export class KeywordApiService {
 
-  
+  pageNumber: number = 1;
+  keyword: any;
   constructor(private http :HttpClient) { }
   createKeyWord(data :CreateOrUpdateKeyword): Observable<GenericResponse<GetKeyword>> {
     return this.http.post<GenericResponse<GetKeyword>>(`${environment.serverUrl}/KeyWord/Create`,data)

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CreateOrUpdateCategory } from 'src/app/shared/Models/Category/category';
 import{CateogryApiService }from '../../../../shared/API-Service/Cateogry/cateogry-api.service'
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-insert-category',
@@ -13,10 +13,13 @@ export class InsertCategoryComponent implements OnInit {
   category: CreateOrUpdateCategory = { titleAr: '', title: '' };
   update:boolean;
   requestSent: boolean;
-
-  constructor( private cateogryApiService :CateogryApiService,private router: Router) { }
+  categoryId: number;
+  constructor( private cateogryApiService :CateogryApiService,private router: Router,private routeActiviate: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.categoryId = +this.routeActiviate.snapshot.paramMap.get('categoryId');
+    console.log(this.categoryId); // should output 4
+  
     // this.category = { titleAr: '', title: '' };
     // if (this.cateogryApiService.category) {
     //   this.update = true;
@@ -29,6 +32,7 @@ export class InsertCategoryComponent implements OnInit {
       this.update = true;
       this.category = this.cateogryApiService.category;
       this.cateogryApiService.category = null;
+      this.getById(this.category.id);
     } else {
       this.update = false;
       this.category = { titleAr: '', title: '' };
@@ -49,6 +53,12 @@ insertCategory() {
     },
     () => {this.requestSent = false}
   )
+}
+getById(id:number)
+{
+     this.cateogryApiService.getCategoryById(id).subscribe((res)=>{
+      this.cateogryApiService.category = res.data;
+    })
 }
 updateCategory() {
   // this.requestSent = true;
