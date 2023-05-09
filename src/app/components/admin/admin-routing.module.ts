@@ -32,6 +32,10 @@ const routes: Routes = [
             component:ListArticleComponent
            },
            {
+            path: 'content/admin/update-article/:id',
+            component: InsertArticleComponent
+          },
+           {
             path: "insert-article",
             component: InsertArticleComponent,
         },

@@ -1,3 +1,15 @@
 *{
     direction: rtl;
 }
+:host >>> .tooltip-inner {
+    background-color: #ffffff;
+    color: rgb(243, 7, 7);
+  }
+  :host >>> .tooltip.top .tooltip-arrow:before,
+  :host >>> .tooltip.top .tooltip-arrow {
+    border-top-color: #fcfcfc;
+  }
+
+.show-hide{
+  top:20px;
+}

@@ -65,10 +65,12 @@ export class ListArticleComponent extends PaginationComponent implements OnInit 
   update(id: number) {
 
     
-   this.articleApiService.getArticleById(id).subscribe((res)=>{
-    this.articleApiService.Data.next(res.data);
-   })
-   this.router.navigateByUrl("content/admin/insert-article");
+  //  this.articleApiService.getArticleById(id).subscribe((res)=>{
+  //   this.articleApiService.Data.next(res.data);
+  //  })
+  //  this.router.navigateByUrl("content/admin/insert-article");
+  this.router.navigateByUrl(`content/admin/update-article/${id}`)
+
 
   }
   pageChanged(event: any) {

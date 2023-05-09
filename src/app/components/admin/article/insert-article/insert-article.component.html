@@ -1,1 +1,119 @@
-<p>insert-article works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="padding-bottom: 5px !important">
+                    <div *ngIf="update; else elseBlock1">
+                        <h5 class="pb-2">تعديل المقال متاح</h5>
+      </div>
+                    <ng-template #elseBlock1>
+                        <h5 class="pb-2">اضافه مقال</h5>
+                        <span style="font-size: 14px">
+                        </span>
+                    </ng-template>
+                </div>
+                <div class="card-body">
+                    <form class="needs-validation" [formGroup]="InsertForm" autocomplete="off" (ngSubmit)="onSubmit()">
+                        <div class="form-row">
+                               <!-- title Arabic  -->
+                               <div class="col-lg-6 col-sm-12 mb-2">  عنوان المقال                
+                                <label for="validation01">
+                                </label>
+                                <input class="form-control" id="validation01" type="text" formControlName="titleAr"
+                                    [tooltip]="fc.titleAr.errors?.required ?  ('this field is required') : null"
+                                    [isDisabled]="!((fc.titleAr.errors?.required && fc.titleAr.touched) || validated)"
+                                    containerClass=""
+                                    [class.is-valid]="fc.titleAr.valid && (fc.titleAr.touched || !validated || fc.titleAr.value)"
+                                    [class.is-invalid]="fc.titleAr.invalid && (fc.titleAr.touched || validated)" />
+                            </div>
+                            <!-- title  -->
+                            <div class="col-lg-6 col-sm-12 mb-2">                  
+                                <label for="validation01"> عنوان المقال بالانجليزيه
+                                </label>
+                                <input class="form-control" id="validation01" type="text" formControlName="title"
+                                    [tooltip]="fc.title.errors?.required ?  ('this field is required') : null"
+                                    [isDisabled]="!((fc.title.errors?.required && fc.title.touched) || validated)"
+                                    containerClass=""
+                                    [class.is-valid]="fc.title.valid && (fc.title.touched || !validated || fc.title.value)"
+                                    [class.is-invalid]="fc.title.invalid && (fc.title.touched || validated)" />
+                            </div>
+                                  <!-- Content Arabic  -->
+                                  <div class="col-lg-6 col-sm-12 mb-2">                  
+                                    <label for="validation01"> محتوي المقال
+                                     </label>
+                                    <input class="form-control" id="validation01" type="text" formControlName="contentAr"
+                                        [tooltip]="fc.contentAr.errors?.required ?  ('this field is required') : null"
+                                        [isDisabled]="!((fc.contentAr.errors?.required && fc.contentAr.touched) || validated)"
+                                        containerClass=""
+                                        [class.is-valid]="fc.contentAr.valid && (fc.titleAr.touched || !validated || fc.contentAr.value)"
+                                        [class.is-invalid]="fc.contentAr.invalid && (fc.contentAr.touched || validated)" />
+                                </div>
+                                <!-- Content  -->
+                                <div class="col-lg-6 col-sm-12 mb-2">                  
+                                    <label for="validation01">محتوي المقال بالانجليزيه
+                                    </label>
+                                    <input class="form-control" id="validation01" type="text" formControlName="content"
+                                        [tooltip]="fc.content.errors?.required ?  ('this field is required') : null"
+                                        [isDisabled]="!((fc.content.errors?.required && fc.content.touched) || validated)"
+                                        containerClass=""
+                                        [class.is-valid]="fc.content.valid && (fc.content.touched || !validated || fc.content.value)"
+                                        [class.is-invalid]="fc.content.invalid && (fc.content.touched || validated)" />
+                                </div>
+                                   
+                                <div class="col-12 mb-3">
+                                    <label for="validationCustom01">
+                                      </label>
+                                    <ng-multiselect-dropdown id="validationCustom02=3" placeholder="أختر تصنيف  أو أكتر من القائمة"
+                                      [settings]="dropdownSettings" formControlName="multCategories" 
+                                       [data]="CateogryList"
+                                      [(ngModel)]="selectedCateogries">
+                                    </ng-multiselect-dropdown>
+                                  </div>
+                                  <div class="col-12 mb-3">
+                                    <label for="validationCustom01">
+                                      </label>
+                                      <ng-multiselect-dropdown id="validationCustom02=3" placeholder="أختر كلمه دلاليه  أو أكتر من القائمة"
+                                      [settings]="dropdownSettings" formControlName="multKeywords" 
+                                       [data]="KeywordList"
+                                      [(ngModel)]="selectedKeywords">
+                                    </ng-multiselect-dropdown>
+                                  
+                                  </div>
+                              
+                               
+                                  <div class="col-12 my-3">
+                                <img src="{{ videologo }}" class="image-style w-25" />
+                                <input type="file" formControlName="articleVideo" accept="video/*" #file id="getLogo"
+                                    style="display: none" accept="videp/*"
+                                    (change)="getVideoUrl($event) " />     
+                                                 <button type="button" onclick="document.getElementById('getLogo').click()"
+                                    class="btn btn-primary  w-25 d-block">
+                                    "اضافه فيديو "  
+                                </button>
+                            </div>
+                            <!-- </div> -->
+                        </div>
+                        <ng-template #elseBlock>
+                            <button class="btn btn-primary pull-right" [disabled]="!submit" type="submit">
+                                {{ "اضافه"  }}
+                            </button>
+                        </ng-template>
+                        <div *ngIf="update; else elseBlock">
+                            <button class="btn btn-primary pull-right" [disabled]="!submit" type="submit">
+                                {{ "تعديل"   }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 
+   <div class="form-group custom-datepicker-dropdown custom-datepicker">
+    <label for="exampleFormControlInput1">Birthday:</label>
+    <input class="form-control digits" type="text" formControlName="birthdate" ngbDatepicker
+      #dob="ngbDatepicker" [maxDate]="maxDate" (click)="dob.toggle()">
+    
+   </div> -->
