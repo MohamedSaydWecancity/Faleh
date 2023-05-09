@@ -49,13 +49,14 @@ export class ListKeywordComponent  extends PaginationComponent  implements OnIni
     this.router.navigateByUrl("content/admin/insert-keyword");
   }
 
-  update(id: number) {
+  update(id: any) {
 
     
   //  this.keywordApiService.getArticleById(id).subscribe((res)=>{
   //   this.articleApiService.Data.next(res.data);
   //  })
-   this.router.navigateByUrl("content/admin/insert-keyword");
+  // this.keywordApiService.keyword=item.id;
+   this.router.navigateByUrl(`content/admin/update-keyword/${id}`)//("content/admin/update-keyword",item.id);
 
   }
   pageChanged(event: any) {

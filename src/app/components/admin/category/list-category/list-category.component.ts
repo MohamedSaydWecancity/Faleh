@@ -65,12 +65,13 @@ export class ListCategoryComponent extends PaginationComponent implements OnInit
   //   this.router.navigate(['content/admin/update-category', item.id]);
 
   // }
-  update(categoryId: any) {
-    // this.cateogryApiService.getCategoryById(category.id).subscribe((res)=>{
-    //   this.cateogryApiService.category = res.data;
-    // })
-    alert(categoryId)
-    this.router.navigateByUrl("content/admin/update-category",categoryId);
+  update(id: any) {
+    // // this.cateogryApiService.getCategoryById(category.id).subscribe((res)=>{
+    // //   this.cateogryApiService.category = res.data;
+    // // })
+    // alert(categoryId)
+    // this.router.navigateByUrl("content/admin/update-category",categoryId);
+    this.router.navigateByUrl(`content/admin/update-category/${id}`)
 
   }
   pageChanged(event: any) {

@@ -1,58 +1,58 @@
-<app-breadcrumb [title]="'إدارة المناطق'" [active_item]="'Form Wizard'"></app-breadcrumb>
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header" style="padding-bottom:5px !important ;">
-          <div *ngIf="update; else elseBlock1">
-            <h5 class="pb-2">تعديل كلمه دلاليه موجودة</h5>
-            يمكنك تعديل كلمه دلاليه أو أكثر فى قائمة الكلمات
-          </div>
-          <ng-template #elseBlock1>
-            <h5 class="pb-2">إضافة كلمه دلاليه جديدة</h5>
-            يمكنك إضافة كلمه أو أكثر فى قائمة الكلمات
-          </ng-template>
-
-        </div>
-        <div class="card-body">
-          <form [formGroup]="insertForm"    (ngSubmit)="onSubmit()">
-            <div class="row form-group">
-              <!--regionNameAR-->
-              <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
-                <label for="nameA"> أسم الكلمه الدلاليه باللغة العرببة</label>
-                <input disableEnglish class="form-control" id="nameA" type="text" formControlName="titleAr"
-                  [tooltip]="fc.titleAr.errors?.required ? 'هذا الحقل مطلوب' : null" container="nameA"
-                  [isDisabled]="!((fc.titleAr.errors?.required && fc.titleAr.touched) )"
-                  [class.is-valid]="fc.titleAr.valid && (fc.nameAr.touched || fc.nameAr.value)"
-                  [class.is-invalid]="fc.titleAr.invalid && (fc.nameAr.touched )"><!-- onlyAlphabets -->
-              </div>
-
-              <!--regionName-->
-              <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
-                <label for="name">أسم الكلمه باللغة الدلاليه الانجليزية</label>
-                <input disableArabic class="form-control" id="name" type="text" formControlName="title"
-                  [tooltip]="fc.name.errors?.required ? 'هذا الحقل مطلوب' : null" container="nameA"
-                  [isDisabled]="!((fc.title.errors?.required && fc.title.touched) )"
-                  [class.is-valid]="fc.title.valid && (fc.title.touched || fc.title.value)"
-                  [class.is-invalid]="fc.title.invalid && (fc.title.touched )"><!-- onlyAlphabets -->
-              </div>
-
-           
-          
+  <app-breadcrumb [title]="'إدارة الكلمات الدلاليه'" [active_item]="'Form Wizard'"></app-breadcrumb>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header" style="padding-bottom:5px !important ;">
+            <div *ngIf="update; else elseBlock1">
+              <h5 class="pb-2">تعديل كلمه دلاليه موجودة</h5>
+              يمكنك تعديل كلمه دلاليه أو أكثر فى قائمة الكلمات
             </div>
-            <div *ngIf="update; else elseBlock">
-              <button class="btn btn-primary pull-right mt-3" [disabled]="requestSent"  type="submit">
-                تعديل
-              </button>
-            </div>
-            <ng-template #elseBlock>
-              <button class="btn btn-primary pull-right mt-3" [disabled]="requestSent" type="submit">
-                إضافة
-              </button>
+            <ng-template #elseBlock1>
+              <h5 class="pb-2">إضافة كلمه دلاليه جديدة</h5>
+              يمكنك إضافة كلمه أو أكثر فى قائمة الكلمات
             </ng-template>
-          </form>
+
+          </div>
+          <div class="card-body">
+            <form [formGroup]="insertForm"    (ngSubmit)="onSubmit()">
+              <div class="row form-group">
+                <!--regionNameAR-->
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                  <label for="nameA"> أسم الكلمه الدلاليه باللغة العرببة</label>
+                  <input disableEnglish class="form-control" id="nameA" type="text" formControlName="titleAr"
+                    [tooltip]="fc.titleAr.errors?.required ? 'هذا الحقل مطلوب' : null" container="nameA"
+                    [isDisabled]="!((fc.titleAr.errors?.required && fc.titleAr.touched) )"
+                    [class.is-valid]="fc.titleAr.valid && (fc.titleAr.touched || fc.titleAr.value)"
+                    [class.is-invalid]="fc.titleAr.invalid && (fc.titleAr.touched )"><!-- onlyAlphabets -->
+                </div>
+
+                <!--regionName-->
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                  <label for="name">أسم الكلمه باللغة الدلاليه الانجليزية</label>
+                  <input disableArabic class="form-control" id="name" type="text" formControlName="title"
+                    [tooltip]="fc.title.errors?.required ? 'هذا الحقل مطلوب' : null" container="nameA"
+                    [isDisabled]="!((fc.title.errors?.required && fc.title.touched) )"
+                    [class.is-valid]="fc.title.valid && (fc.title.touched || fc.title.value)"
+                    [class.is-invalid]="fc.title.invalid && (fc.title.touched )"><!-- onlyAlphabets -->
+                </div>
+
+            
+            
+              </div>
+              <div *ngIf="update; else elseBlock">
+                <button class="btn btn-primary pull-right mt-3" [disabled]="requestSent"  type="submit">
+                  تعديل
+                </button>
+              </div>
+              <ng-template #elseBlock>
+                <button class="btn btn-primary pull-right mt-3" [disabled]="requestSent" type="submit">
+                  إضافة
+                </button>
+              </ng-template>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>

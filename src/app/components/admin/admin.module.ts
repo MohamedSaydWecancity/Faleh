@@ -36,6 +36,7 @@ import { InsertCategoryComponent } from './category/insert-category/insert-categ
 import { ListCategoryComponent } from './category/list-category/list-category.component';
 import { ListKeywordComponent } from './keyword/list-keyword/list-keyword.component';
 import { InsertKeywordComponent } from './keyword/insert-keyword/insert-keyword.component';
+import { ListCustomerComponent } from './Customer/list-customer/list-customer.component';
 
 
 
@@ -49,6 +50,7 @@ import { InsertKeywordComponent } from './keyword/insert-keyword/insert-keyword.
     ListCategoryComponent,
     ListKeywordComponent,
     InsertKeywordComponent,
+    ListCustomerComponent,
     
     
   ],
