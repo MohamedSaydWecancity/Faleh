@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { Observable } from 'rxjs';
 import { CateogryApiService } from 'src/app/shared/API-Service/Cateogry/cateogry-api.service';
 import { PaginationComponent } from 'src/app/shared/Models/PaginationModel/PagintationModel';
 import Swal from 'sweetalert2';
@@ -15,7 +16,8 @@ export class ListCategoryComponent extends PaginationComponent implements OnInit
    //#region  Declare Variables
    response: any[];
 
- 
+   categories$: Observable<any>;
+
  
    Cateogy_List: any[];
    dropdownSettings: IDropdownSettings = {};

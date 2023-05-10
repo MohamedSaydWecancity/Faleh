@@ -45,7 +45,7 @@
                                         [tooltip]="fc.contentAr.errors?.required ?  ('this field is required') : null"
                                         [isDisabled]="!((fc.contentAr.errors?.required && fc.contentAr.touched) || validated)"
                                         containerClass=""
-                                        [class.is-valid]="fc.contentAr.valid && (fc.titleAr.touched || !validated || fc.contentAr.value)"
+                                        [class.is-valid]="fc.contentAr.valid && (fc.contentAr.touched || !validated || fc.contentAr.value)"
                                         [class.is-invalid]="fc.contentAr.invalid && (fc.contentAr.touched || validated)" />
                                 </div>
                                 <!-- Content  -->
@@ -69,16 +69,7 @@
                                       [(ngModel)]="selectedCateogries">
                                     </ng-multiselect-dropdown>
                                   </div>
-                                  <div class="col-12 mb-3">
-                                    <label for="validationCustom01">
-                                      </label>
-                                      <ng-multiselect-dropdown id="validationCustom02=3" placeholder="أختر كلمه دلاليه  أو أكتر من القائمة"
-                                      [settings]="dropdownSettings" formControlName="multKeywords" 
-                                       [data]="KeywordList"
-                                      [(ngModel)]="selectedKeywords">
-                                    </ng-multiselect-dropdown>
-                                  
-                                  </div>
+                            
                               
                                
                                   <div class="col-12 my-3">
@@ -88,7 +79,17 @@
                                     (change)="getVideoUrl($event) " />     
                                                  <button type="button" onclick="document.getElementById('getLogo').click()"
                                     class="btn btn-primary  w-25 d-block">
-                                    "اضافه فيديو "  
+                                    اضافه فيديو   
+                                </button>
+                            </div>
+                            <div class="col-12 my-3">
+                                <img src="{{ imageSrc }}" class="image-style w-25" />
+                                <input type="file" formControlName="image" accept="image/*" #file id="getLogoImage"
+                                    style="display: none" accept="image/*"
+                                    (change)="getLogoUrl($event)" />                  
+                                    <button type="button" onclick="document.getElementById('getLogoImage').click()"
+                                    class="btn btn-primary  w-25 d-block">
+                                    اضافه صوره
                                 </button>
                             </div>
                             <!-- </div> -->

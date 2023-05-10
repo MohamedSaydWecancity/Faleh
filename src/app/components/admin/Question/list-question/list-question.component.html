@@ -1,0 +1,93 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header" style="padding-bottom: 5px !important">
+                    <div class="row">
+                        <div class="col-6">
+                            <h5 class="pb-2">التصنيفات</h5>
+               
+                        </div>
+
+                        <div class="col-6 header-titles">
+                            <a routerLink="/content/admin/insert-article" class="d-block">
+                                <button class="btn pull-right " type="button">
+                                    <span class="m-2"> التصنيف</span>
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-block row">
+                    <div class="col-sm-12 col-lg-12 col-xl-12">
+                        <div class="table-responsive">
+                            <table class="table table-responsive-sm text-center">
+                                <thead>
+                                    <tr class=" ">
+                                        <th scope="col"></th>
+                                        <th scope="col">السؤال</th>           
+                                        <th scope="col"> محتوي السؤال</th>    
+                                        <th scope="col">اسم العميل</th>           
+                                        <th scope="col">تصنيف السؤال</th>    
+                                        <th scope="col">حاله السؤال</th>           
+                                        <th scope="col">الرد</th>                
+                                        <th scope="col">تم الرد بواسطه</th>      
+                                        <th scope="col"> تاريخ الرد</th>           
+  
+
+
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let view of questionList;let x = index" class=" ">
+                                        <td scope="row" class="p-2">{{x+1}}</td>
+                                        <td class="p-2">{{view.title}}</td>
+                                        <td class="p-2">{{view.content}}</td>
+                                        <td class="p-2">{{view.customerName}}</td>
+                                        <td class="p-2">{{view.categoryTitle}}</td>
+                                        <td class="p-2">{{view.questionStatusTitle}}</td>
+                                        <td class="p-2">{{view.reply}}</td>
+                                        <td class="p-2">{{view.repliedByName}}</td>
+                                        <td class="p-2">{{view.repliedAt}}</td>
+
+
+
+
+
+
+                                            <td class="font-style chose">
+                                                <button class="btn pull-right"
+                                                    style="color: rgba(35, 118, 241, 0.667); padding: 7px"
+                                                    (click)="acceptAnswerReply(view.questionId)">
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                 </button>
+                                                <button class="btn  pull-right"  style="color: red; padding: 7px"
+                                                   (click)="rejectAnswerReply(view.questionId)">
+                                                   <i class="fa fa-times" aria-hidden="true"></i>                                                                                                 </button>
+                                                
+                                            
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center w-100">
+        <div class='d-flex justify-content-center w-50 py-3'>
+          <pagination [boundaryLinks]="true" [totalItems]="totalCount"  [itemsPerPage]="pager.maxResultCount"
+            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" 
+           (pageChanged)="pageChanged($event)">
+          </pagination>
+        </div>
+    </div>
+</div>
+
+
+

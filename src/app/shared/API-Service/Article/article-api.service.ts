@@ -21,7 +21,7 @@ export class ArticleApiService {
   
   }
   updateArticle(data:FormData): Observable<GenericResponse<GetArticle>> {
-    return this.http.post<GenericResponse<GetArticle>>(`${environment.serverUrl}/Article/Create`,data)
+    return this.http.post<GenericResponse<GetArticle>>(`${environment.serverUrl}/Article/Update`,data)
   
   }
   getArticleById(acticleId:number): Observable<GenericResponse<GetArticleById>> {

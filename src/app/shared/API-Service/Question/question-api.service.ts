@@ -13,13 +13,13 @@ export class QuestionApiService {
 
   constructor(private http :HttpClient) { }
   AcceptQuestionReply(questionId:number): Observable<GenericResponse<GetQuestion>> {
-    return this.http.get<GenericResponse<GetQuestion>>(`${environment.serverUrl}/Question/AcceptQuestionReply?id=${questionId}`)
+    return this.http.get<GenericResponse<GetQuestion>>(`${environment.serverUrl}/Question/AcceptQuestionReply?questionId=${questionId}`)
   }
   RejectQuestionReply(questionId:number): Observable<GenericResponse<GetQuestion>> {
-    return this.http.get<GenericResponse<GetQuestion>>(`${environment.serverUrl}/Question/RejectQuestionReply?id=${questionId}`)
+    return this.http.get<GenericResponse<GetQuestion>>(`${environment.serverUrl}/Question/RejectQuestionReply?questionId=${questionId}`)
   }
   getAllPaged(modle:PagintationModel ): Observable<GenericResponse<GetQuestionList>> {
-    return this.http.post<GenericResponse<GetQuestionList>>(`${environment.serverUrl}/News/GetNewsList`,modle)
+    return this.http.post<GenericResponse<GetQuestionList>>(`${environment.serverUrl}/Question/GetAllPaged`,modle)
   }
  
 }

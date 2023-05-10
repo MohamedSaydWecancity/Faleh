@@ -45,55 +45,24 @@ export class ListKeywordComponent  extends PaginationComponent  implements OnIni
     )
   }
  
-  AddNew() {
-    this.router.navigateByUrl("content/admin/insert-keyword");
-  }
+  // AddNew() {
+  //   this.router.navigateByUrl("content/admin/insert-keyword");
+  // }
 
-  update(id: any) {
+  // update(id: any) {
 
     
-  //  this.keywordApiService.getArticleById(id).subscribe((res)=>{
-  //   this.articleApiService.Data.next(res.data);
-  //  })
-  // this.keywordApiService.keyword=item.id;
-   this.router.navigateByUrl(`content/admin/update-keyword/${id}`)//("content/admin/update-keyword",item.id);
+  // //  this.keywordApiService.getArticleById(id).subscribe((res)=>{
+  // //   this.articleApiService.Data.next(res.data);
+  // //  })
+  // // this.keywordApiService.keyword=item.id;
+  //  this.router.navigateByUrl(`content/admin/update-keyword/${id}`)//("content/admin/update-keyword",item.id);
 
-  }
+  // }
   pageChanged(event: any) {
     this.pageNumber = event.page;// -1 * pageSize;
     this.pager.skipCount = (this.pageNumber - 1) * this.pager.maxResultCount;
     this.getKeyword();
   }
-  delete(id : number){
-    Swal.fire({
-      title: 'هل تريد مسح العنصر ؟',
-      text: "لن يكون لك صلاحية إعادته مره اخرى",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      cancelButtonText: 'الغاء',
-      confirmButtonText: 'امسح العنصر !'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.keywordApiService.deleteKeyword(id).subscribe((res) => {
-          Swal.fire({
-            icon: "success",
-            title: "تم المسح بنجاح",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-       this.getKeyword();
-        },(err) => {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text:err.error.message    
-          })
-        },() => {
-          console.log("completed");
-        })
-      }
-    }) 
-  }
+ 
 }

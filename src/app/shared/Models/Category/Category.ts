@@ -9,6 +9,9 @@ export interface GetCategory
   id:number;
   titleAr: string;
   title: string;
+  order:number;
+  image:string;
+  parentId:string;
 
 }
 export interface GetCategoryById 

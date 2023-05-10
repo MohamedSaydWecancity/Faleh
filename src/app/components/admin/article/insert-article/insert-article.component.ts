@@ -5,13 +5,14 @@ import { IDropdownSettings } from "ng-multiselect-dropdown";
 import { ArticleApiService } from "src/app/shared/API-Service/Article/article-api.service";
 import { CateogryApiService } from "src/app/shared/API-Service/Cateogry/cateogry-api.service";
 import { KeywordApiService } from "src/app/shared/API-Service/Keyword/keyword-api.service";
+import Swal from "sweetalert2";
 @Component({
   selector: 'app-insert-article',
   templateUrl: './insert-article.component.html',
   styleUrls: ['./insert-article.component.css']
 })
 export class InsertArticleComponent implements OnInit {
-  KeywordList: any[];
+  //KeywordList: any[];
   CateogryList: any[];
   public article: any;
   public keywords: any[];
@@ -24,6 +25,9 @@ export class InsertArticleComponent implements OnInit {
   public update: boolean = false;
   public validated: boolean;
   private articleVideo: File;
+  private articleImage: File;
+  private articleLogoImage:string;
+
   public videologo: string;
   public imageSrc: string;
   public dropdownSettings: IDropdownSettings = {};
@@ -32,6 +36,7 @@ export class InsertArticleComponent implements OnInit {
   public selectedKeywordsItems: any = [];
   selectedCateogries = [];
   selectedKeywords = [];
+  id: any;
 
   constructor(
     private fb: FormBuilder,
@@ -40,47 +45,52 @@ export class InsertArticleComponent implements OnInit {
     private _keywordApiService: KeywordApiService,
     private _router: Router,
     private _activatedRoute: ActivatedRoute
-  ) {}
+  ) {
+    this.initiate()
+  }
 
   ngOnInit(): void {
     this.GetData();
     // this.checkEdit();
     //
+
     let id = this._activatedRoute.snapshot.params['id']
-    if (id !=null) {
-      this.getById(id); // call getById() before initForm()
+    console.log(id);
+    debugger
+    if (id) {
+    this.id=id
+   //   this.checkEdit();
+     // this.getById(id); // call getById() before initForm()
       // this.initForm(this.keywordApiService.keyword);
-      this.update = true;
-      console.log(this.update)
-    } else {
+      this._articleApiService.getArticleById(Number(id)).subscribe((res) => {
+        this.article = res.data;
+        this.initiate(this.article); // Pass the article object to initiate() method
+        this.update = true;
+        console.log(this.update)
+      });
+     
+    }
+     else {
       this.update = false;
-      this.checkEdit();
+     // this.checkEdit();
+     this.initiate();
     }
 
   }
 
-  private checkEdit() {
-    if (typeof this._activatedRoute.snapshot.params["id"] !== "undefined") {
-      let id = this._activatedRoute.snapshot.params["id"];
-      if (id) {
-        let Article = this.getById(id);
-        this.update = true;
-        this.initiate(Article);
-      } else this.initiate();
-    } else this.initiate();
-  }
+ 
 
   private initiate(article?: any) {
+    console.log(article)
     this.InsertForm = this.fb.group({
-      titleAr: ["", Validators.required],
-      title: ["", Validators.required],
-      contentAr: ["", Validators.required],
-      content: ["", Validators.required],
-      articleVideo: [""],
-      categoriesIds: [null],
-      keywordsIds: [null],
-      multCategories: [null],
-      multKeywords: [null],
+      titleAr: [article?.titleAr||"", Validators.required],
+      title: [article?.title||"", Validators.required],
+      contentAr: [article?.contentAr||"", Validators.required],
+      content: [article?.content||"", Validators.required],
+      articleVideo: [article?.video||""],
+      // articleImage: [article.titleAr||""],
+      // categoriesIds: [article.articleCategories||null],
+      multCategories: [article?.articleCategories||null],
     });
 
     this.dropdownSettings = {
@@ -93,7 +103,19 @@ export class InsertArticleComponent implements OnInit {
       allowSearchFilter: true,
     };
   }
-
+    // imgFile
+    public  getLogoUrl(event: any) {
+      const reader = new FileReader();
+      if (event.target.files && event.target.files.length) {
+        const [file] = event.target.files;
+        this.articleImage = event.target.files[0];
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          this.articleLogoImage = reader.result as string;
+          this.logoForm?.append("articleImage", this.articleImage);
+        };
+      }
+    }
   public getVideoUrl(event: any) {
     const reader = new FileReader();
     if (event.target.files && event.target.files.length) {
@@ -117,8 +139,9 @@ export class InsertArticleComponent implements OnInit {
   // }
   private getById(id): any {
     this._articleApiService.getArticleById(id).subscribe((res) => {
-      debugger
+      
       this.article = res.data;
+console.log(this.article)
       this.initiate(this.article); // Pass the article object to initiate() method
     });
   }
@@ -161,9 +184,10 @@ export class InsertArticleComponent implements OnInit {
       this.CateogryList = res.data;
     });
 
-    this._keywordApiService.getKeyWordAllForList().subscribe((res) => {
-      this.KeywordList = res.data;
-    });
+    // this._keywordApiService.getKeyWordAllForList().subscribe((res) => {
+    // this.KeywordList = res.data;
+    // }
+    // );
   }
 
   private loopform() {
@@ -183,6 +207,9 @@ export class InsertArticleComponent implements OnInit {
     if (this.articleVideo != null && !this.update) {
       this.logoForm.append("articleVideo", this.articleVideo);
     }
+    if (this.articleImage != null && !this.update) {
+      this.logoForm.append("articleImage", this.articleImage);
+    }
   }
 
   private insertData() {
@@ -192,7 +219,14 @@ export class InsertArticleComponent implements OnInit {
       (res) => {
         if (res.success) {
           this.submit = true;
-          this._router.navigate(["/articles/all"]);
+          this.InsertForm.reset();
+          Swal.fire({
+            icon: "success",
+            title: "تم اضافه المقال بنجاح",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          this._router.navigate(["content/admin/ListArticle"]);
         }
       },
       (err) => {
@@ -225,22 +259,34 @@ export class InsertArticleComponent implements OnInit {
               );
             }
           }
+          this.logoForm.append("id",this.id)
         }
       }
     });
 
-    // Only include articleVideo if it is not null
+    // Only include article Video if it is not null
     if (this.articleVideo != null) {
       this.logoForm.append("articleVideo", this.articleVideo);
     }
-
+    
+    if (this.articleImage != null) {
+      this.logoForm.append("articleImage", this.articleImage);
+    }
+    
     this._articleApiService
       .updateArticle(this.logoForm)
       .subscribe(
         (res) => {
           if (res.success) {
             this.submit = true;
-            this._router.navigate(["/articles/all"]);
+            this.InsertForm.reset();
+            Swal.fire({
+              icon: "success",
+              title: "تم تعديل المقال بنجاح",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            this._router.navigate(["content/admin/ListArticle"]);
           }
         },
         (err) => {
@@ -249,20 +295,13 @@ export class InsertArticleComponent implements OnInit {
       );
   }
 
+
   public get fc() {
     return this.InsertForm.controls;
   }
 
   onSubmit() {
-    // this.validated = true;
-    // if (this.InsertForm.invalid) {
-    //   return;
-    // }
-    // if (!this.update) {
-    //   this.insertData();
-    // } else {
-    //   this.editData();
-    // }
+   debugger
     if (!this.InsertForm.invalid ) {
       if (this.update) {
         this.editData();
