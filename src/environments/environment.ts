@@ -14,7 +14,13 @@
 export const environment = {
   production: false
   , serverUrl: 'https://falehapi.wecancity.com/api/ar'
-  ,serverMotim:'https://motimback.wecancity.com/api/en'
   //http://falehapi.wecancity.com/swagger/index.html
+  ,serverFirstHalfOfImageUrl:"https://falehapi.wecancity.com/"
+  ,  defaultImage: 'assets/images/statics/personAvatar.png',
+
 
 };
+
+
+
+export const url ="https://falehapi.wecancity.com/"

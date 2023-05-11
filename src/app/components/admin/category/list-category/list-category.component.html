@@ -10,7 +10,7 @@
                         </div>
 
                         <div class="col-6 header-titles">
-                            <a routerLink="/content/admin/insert-article" class="d-block">
+                            <a routerLink="/content/admin/insert-category" class="d-block">
                                 <button class="btn pull-right " type="button">
                                     <span class="m-2"> التصنيف</span>
                                     <i class="fa fa-plus"></i>
@@ -24,18 +24,20 @@
                         <div class="table-responsive">
                             <table class="table table-responsive-sm text-center">
                                 <thead>
-                                    <tr class=" ">
-                                        <th scope="col"></th>
-                                        <th scope="col">التصنيف</th>           
-                                        <th scope="col">التصنيف بالانجليزيه</th>    
-                                        <th scope="col"></th>
-                                    </tr>
+                                    <th scope="col" class="f-16  text-white">#</th>
+                                    <th scope="col" class="f-16  text-white">التصنيف باللغة العربية </th>
+                                    <th scope="col" class="f-16  text-white">التصنيف باللغة الانجليزية</th>
+                                    <th scope="col" class="f-16  text-white"> التصنيف الأب </th>
+                                    <th scope="col" class="f-16  text-white">الترتيب</th>
+                                    <th scope="col" class="f-16  text-white"></th>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let view of Cateogy_List;let x = index" class=" ">
+                                    <!-- <tr *ngFor="let view of Cateogy_List;let x = index" class=" ">
                                         <td scope="row" class="p-2">{{x+1}}</td>
                                         <td class="p-2">{{view.titleAr}}</td>
                                         <td class="p-2">{{view.title}}</td>
+                                        <td class="font-style">{{ view.parentId > 0 ? item.parentCategoryTitle : 'لا يوجد حاليا' }}</td>
+                                        <td class="p-2">{{view.order}}</td>
 
 
                                             <td class="font-style chose">
@@ -51,7 +53,28 @@
                                                 
                                             
                                             </td>
-                                        </tr>
+                                        </tr> -->
+                                        <!-- <tr *ngFor="let item of (categories$ | async)?.items; let i = index">
+                                            <td scope="row" class="font-style">{{i+pager?.skipCount +1}}</td> -->
+                                    <tr *ngFor="let item of Cateogy_List;let x = index" class=" ">
+                                        
+                                        <td scope="row" class="p-2">{{x+1}}</td>
+                                            <td class="font-style">{{ item.titleAr }}</td>
+                                            <td class="font-style">{{ item.title }}</td>
+                                            <td class="font-style">{{ item.parentId > 0 ? item.parentCategoryTitle : 'لا يوجد حاليا' }}</td>
+                                            <td class="font-style">{{ item.order }}</td>
+                            
+                                            <td class="font-style" style=" text-align: left;">
+                                              <button class=" border-0 btn btn-outline-primary  mr-2 d-inline-flex px-2 py-1" *appHasPermission="2"
+                                                (click)="update(item.id)">
+                                                <i class="fa fa-pencil fs-5" aria-hidden="true"></i>
+                                              </button>
+                                              <button class=" border-0 btn btn-outline-danger d-inline-flex px-2 py-1" *appHasPermission="3"
+                                                (click)="delete(item.id)">
+                                                <i class="fa fa-trash fs-5" aria-hidden="true"></i>
+                                              </button>
+                                            </td>
+                                          </tr>
                                 </tbody>
                             </table>
                             

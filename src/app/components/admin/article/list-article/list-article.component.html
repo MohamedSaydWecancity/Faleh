@@ -36,7 +36,10 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let view of Article_List;let x = index" class=" ">
-                                        <td scope="row" class="p-2">{{x+1}}</td>
+                                        <!-- <td scope="row" class="p-2">{{x+1}}</td> -->
+                                        <!-- <td scope="row" class="p-2">{{views.id}}</td> -->
+                                        <td class="p-2">{{view.id}}</td>
+
                                         <td class="p-2">{{view.titleAr}}</td>
                                         <td class="p-2">{{view.contentAr}}</td>
                                         <!-- <td class="p-2">{{view.video}}</td> -->
@@ -44,18 +47,10 @@
                                         <td class="p-2">{{view.views}}</td>
                                         <td class="p-2">{{view.reactions}}</td>
 
-                                            <!-- <td class="font-style chose">
-                                               
-                                                <button class=" border-0 btn btn-outline-primary  mr-2 d-inline-flex px-2 py-1" *appHasPermission="2"
-                                                  (click)="update(item)">
-                                                     <i class="fa fa-pencil fs-5" aria-hidden="true"></i></button>
-                                                   <button class="btn  pull-right"  style="color: red; padding: 7px"
-                                                   (click)="delete(view.id)">
-                                                    <i class="fa fa-trash"></i>
-                                                       </button>
-                                                
-                                            
-                                            </td> -->
+                                         
+                                            <button (click)="openImagePopup(view.id)" class="btn btn-primary"> 
+                                                <i class="fas fa-images"></i> View Images
+                                            </button>
                                             <td class="font-style chose">
                                                 <button class="btn pull-right"
                                                     style="color: rgba(35, 118, 241, 0.667); padding: 7px"

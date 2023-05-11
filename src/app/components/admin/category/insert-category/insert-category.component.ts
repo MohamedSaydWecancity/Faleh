@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CreateOrUpdateCategory, GetCategoryById } from 'src/app/shared/Models/Category/category';
+import { CreateOrUpdateCategory, GetCategories, GetCategoryById } from 'src/app/shared/Models/Category/category';
 import{CateogryApiService }from '../../../../shared/API-Service/Cateogry/cateogry-api.service'
 import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-insert-category',
@@ -12,116 +13,142 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class InsertCategoryComponent implements OnInit {
 
-
-
-maxDate: Date;
+  categoryForm: FormGroup;
   update: boolean;
-  insertForm: FormGroup;
+  imgURL: any = "";
+  file: File = null;
+  categories$: any[];
+  category: GetCategories;
+  categoryFormPic = new FormData();
   requestSent: boolean;
-  keywordId: number;
 
- 
-  constructor(private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private  cateogryApiService :CateogryApiService,
-    private router: Router) {
-    this.maxDate = new Date();
-    
-  }
-  
-  
-  private init (keyword?:GetCategoryById){
-    this.insertForm = this.fb.group({
-      // id: [||''],
-      title: [keyword?.title||'', Validators.required],
-      titleAr: [keyword?.titleAr||'', Validators.required],
-    });
-  }
-
-
-  ngOnInit(): void {
-
-   
-    let id = this.route.snapshot.params['id']
-    if (id !=null) {
-      this.getById(id); // call getById() before initForm()
-      // this.initForm(this.keywordApiService.keyword);
-      this.update = true;
-      this.cateogryApiService.category = null;
-    } else {
-      this.update = false;
-      this.init();
-    }
-    console.log(this.insertForm.controls);
-  }
+  constructor(private _formBuilder: FormBuilder,
+    private categoryService: CateogryApiService,
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   get fc() {
-    return this.insertForm.controls;
+    return this.categoryForm.controls;
   }
 
+  ngOnInit(): void {
+    this.getCategories();
+    this.initForm();
+    let id = this.route.snapshot.paramMap.get('id');
+    if (id)
+      this.getCategoryById(id);
+    else {
+      this.update = false;
+      this.imgURL = environment.defaultImage;
+    }
 
-  insertCategory() {
-    this.requestSent = true;
-    this.cateogryApiService.createCategory(this.insertForm.value).subscribe(
-      response => {
-        Swal.fire({
-          icon: 'success',
-          title: "تم إدخال التصنيف  بنجاح",
-          showConfirmButton: false,
-          timer: 1500
-        })
-        this.router.navigateByUrl("content/admin/ListCategory");
-      },
-      () => { this.requestSent = false }
-    )
   }
-  //   getById(id:number)
-  // {
-  //      this.keywordApiService.getKeyWordById(id).subscribe((res)=>{
-  //       this.keywordApiService.keyword = res.data;
-  //     })
-  // }
-  getById(id: number) {
-    this.cateogryApiService.getCategoryById(id).subscribe((res) => {
-      this.cateogryApiService.category = res.data;
-      if(res.success)
-      {
-        this.init(res.data);
-        this.insertForm.addControl('id', new FormControl(res.data.id, Validators.required));
 
-      }
-      
+  initForm(category?: GetCategories) {
+    this.categoryForm = this._formBuilder.group({
+      title: [category?.title || '', Validators.required],
+      titleAr: [category?.titleAr || '', Validators.required],
+      categoryImage: [''],
+      parentId: [category?.parentId || '', Validators.nullValidator],
+      order: [category?.order || '', Validators.required],
     });
   }
 
-  updateCategory() {
+  getCategoryById(id: any) {
+    this.categoryService.getCategoryById(id).subscribe(async (res: any) => {
+      this.category = await res.data;
+      this.initForm(this.category);
+      this.imgURL = environment.serverFirstHalfOfImageUrl + this.category?.categoryImage;
+      this.categoryForm.addControl('id', new FormControl(this.category?.id));
+      this.update = true;
+    });
+  }
+
+  preview(files: any) {
+     
+    if (files.length === 0)
+      return;
+    var mimeType = files[0].type;
+    this.file = files[0];
+    if (mimeType.match(/image\/*/) == null)
+      return Swal.fire({ icon: "error", title: `نوع صورة غير مقبول` });
+    var reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = (_event) => {
+      this.imgURL = reader.result;
+    }
+  }
+
+
+  getCategories() {
+    this.categoryService.getMainForList().subscribe(res => {
+      this.categories$ = res.data;
+    });
+  }
+
+  loopform() {
+     
+    this.categoryFormPic = new FormData();
+    Object.keys(this.categoryForm.value).forEach((key) => {
+      if (typeof this.categoryForm.value[key] != "object")
+        this.categoryFormPic.append(key, this.categoryForm.value[key]);
+      else if (typeof this.categoryForm.value[key] == "object" && this.categoryForm.value[key] != null)
+        Object.keys(this.categoryForm.value[key]).forEach((subkey) => {
+          this.categoryFormPic.append(key, this.categoryForm.value[key][subkey].id);
+        });
+    });
+    this.categoryFormPic.append('categoryImage', this.file);
+  }
+
+  insertCategory() {
+    if (this.categoryForm.status == "VALID" && !this.file)
+      return Swal.fire({ icon: "error", title: `برجاء اضافة صورة` });
+
+    this.loopform()
     this.requestSent = true;
-    this.cateogryApiService.updateCategory(this.insertForm.value).subscribe(
+    this.categoryService.createCategory(this.categoryFormPic).subscribe(
       response => {
         Swal.fire({
           icon: 'success',
-          title: "تم تعديل  التصنيف بنجاح",
+          title: "تم إضافة التصنيف بنجاح",
           showConfirmButton: false,
           timer: 1500
         })
-        this.router.navigateByUrl("content/admin/ListCategory");
+        this.router.navigateByUrl("content/admin/GetCategories");
       },
-      () => { this.requestSent = false }
+      () => { this.requestSent = false; }
+    )
+  }
+
+
+  updateCategory() {
+    this.loopform();
+    this.requestSent = true;
+    this.categoryService.updateCategory(this.categoryFormPic).subscribe(
+      response => {
+        Swal.fire({
+          icon: 'success',
+          title: "تم تعديل بيانات التصنيف بنجاح",
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.router.navigateByUrl("content/admin/GetCategories");
+      },
+      () => { this.requestSent = false; }
     )
   }
 
   onSubmit() {
-
-    if (this.insertForm.status === "VALID") {
-      if (this.update) {
+    if (this.categoryForm.status == "VALID") {
+      if (this.update == true)
         this.updateCategory();
-      } else {
+      else
         this.insertCategory();
-      }
-    } else {
-      this.insertForm.markAllAsTouched();
-    }
+    } else
+      this.categoryForm.markAllAsTouched();
   }
+
+
   }
 
 

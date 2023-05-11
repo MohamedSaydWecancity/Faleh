@@ -160,7 +160,7 @@ console.log(this.article)
   SelectedCategoris() {
     this.selectedCateroriesItems = [];
     if (this.fc.categoriesIds.value !== null) {
-      this._catergoryApiService.getCategoryAllForList().subscribe((res) => {
+      this._catergoryApiService.getMainForList().subscribe((res) => {
         if (res.data) this.selectedCateroriesItems = res.data;
       });
     } else this.selectedCateroriesItems = [];
@@ -180,7 +180,7 @@ console.log(this.article)
   }
 
   private GetData() {
-    this._catergoryApiService.getCategoryAllForList().subscribe((res) => {
+    this._catergoryApiService.getMainForList().subscribe((res) => {
       this.CateogryList = res.data;
     });
 

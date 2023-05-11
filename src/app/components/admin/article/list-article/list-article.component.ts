@@ -11,6 +11,8 @@ import { PaginationComponent } from 'src/app/shared/Models/PaginationModel/Pagin
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ImagePopupComponent } from '../image-popup/image-popup.component';
 @Component({
   selector: 'app-list-article',
   templateUrl: './list-article.component.html',
@@ -28,7 +30,7 @@ export class ListArticleComponent extends PaginationComponent implements OnInit 
 
   //#endregion
 
-  constructor(private articleApiService: ArticleApiService,private router: Router) {super(); }
+  constructor(private modalService:NgbModal,private articleApiService: ArticleApiService,private router: Router) {super(); }
 
   ngOnInit(): void {
     this.KeywordList = [];
@@ -110,6 +112,12 @@ export class ListArticleComponent extends PaginationComponent implements OnInit 
       }
     }) 
   }
-
+  openImagePopup(articleId: number): void 
+  { const modalRef = this.modalService.open(ImagePopupComponent, 
+    {size:'lg',
+    centered: true
+  // Add any other configurations for the modal  
+  }); 
+  modalRef.componentInstance.articleId = articleId; }
    
 }

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
 import { GenericResponse } from '../../Models/GenericResponse/GenericResponse';
 import{PagintationModel} from '../../Models/PaginationModel/PagintationModel'
-import {CreateOrUpdateArticle, GetArticle, GetArticleById, GetArticleList  } from '../../Models/Article/Article';
+import {ArticleImages, CreateOrUpdateArticle, GetArticle, GetArticleById, GetArticleList  } from '../../Models/Article/Article';
 import { BehaviorSubject } from 'rxjs';
 
 
@@ -24,8 +24,15 @@ export class ArticleApiService {
     return this.http.post<GenericResponse<GetArticle>>(`${environment.serverUrl}/Article/Update`,data)
   
   }
+  createArticleImage(data:FormData): Observable<GenericResponse<ArticleImages>> {
+    return this.http.post<GenericResponse<ArticleImages>>(`${environment.serverUrl}/ArticleImage/Create`,data)
+  
+  }
   getArticleById(acticleId:number): Observable<GenericResponse<GetArticleById>> {
     return this.http.get<GenericResponse<GetArticleById>>(`${environment.serverUrl}/Article/GetById?id=${acticleId}`)
+  }
+  getImagesByArticleId(acticleId:number): Observable<GenericResponse<ArticleImages[]>> {
+    return this.http.get<GenericResponse<ArticleImages[]>>(`${environment.serverUrl}/ArticleImage/Get?ArticleId=${acticleId}`)
   }
   getArticleList(modle:PagintationModel ): Observable<GenericResponse<GetArticleList>> {
     return this.http.post<GenericResponse<GetArticleList>>(`${environment.serverUrl}/Article/GetArticleList`,modle)

@@ -37,6 +37,9 @@ import { ListCategoryComponent } from './category/list-category/list-category.co
 import { ListKeywordComponent } from './keyword/list-keyword/list-keyword.component';
 import { ListCustomerComponent } from './Customer/list-customer/list-customer.component';
 import { ListQuestionComponent } from './Question/list-question/list-question.component';
+import { ListNewsComponent } from './news/list-news/list-news.component';
+import { InsertNewsComponent } from './news/insert-news/insert-news.component';
+import { ImagePopupComponent } from './article/image-popup/image-popup.component';
 
 
 
@@ -51,6 +54,9 @@ import { ListQuestionComponent } from './Question/list-question/list-question.co
     ListKeywordComponent,
     ListCustomerComponent,
     ListQuestionComponent,
+    ListNewsComponent,
+    InsertNewsComponent,
+    ImagePopupComponent,
     
     
   ],

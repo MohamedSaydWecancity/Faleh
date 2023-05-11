@@ -50,3 +50,10 @@ export interface GetArticleList
     totalCount:number
     items:GetArticle[]
 }
+export interface ArticleImages
+{
+  id:number;
+  image:string;
+  title:string;
+  articleId:number;
+}

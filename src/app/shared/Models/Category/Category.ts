@@ -29,4 +29,14 @@ export interface GetCategoryAllForList
 {
     id:number;
     title: string;
+    order:number;
+    parentId:number
+}
+export interface GetCategories {
+  id: number;
+  title: string;
+  titleAr: string;
+  categoryImage: string;
+  parentId: number;
+  order:number;
 }

@@ -1,58 +1,145 @@
-<app-breadcrumb [title]="'إدارة التصنيفات'" [active_item]="'Form Wizard'"></app-breadcrumb>
+<app-breadcrumb [title]="'إدارة تصنيف الخدمات'" [active_item]="'Form Wizard'"></app-breadcrumb>
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header" style="padding-bottom:5px !important ;">
-          <div *ngIf="update; else elseBlock1">
-            <h5 class="pb-2">تعديل  تصنيف موجودة</h5>
-            يمكنك تعديل تصنيف  أو أكثر فى قائمة التصنيفات
-          </div>
-          <ng-template #elseBlock1>
-            <h5 class="pb-2">إضافة تصنيف  جديدة</h5>
-            يمكنك إضافة تصنيف أو أكثر فى قائمة التصنيفات
-          </ng-template>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="padding-bottom:5px !important ;">
+                    <div *ngIf="update; else elseBlock1">
+                        <h5 class="pb-2">تعديل تصنيف موجود</h5>
+                        يمكنك تعديل تصنيف أو أكثر فى قائمة تصنيف الخدمات
+                    </div>
+                    <ng-template #elseBlock1>
+                        <h5 class="pb-2">إضافة تصنيف جديد</h5>
+                        يمكنك إضافة تصنيف أو أكثر فى قائمة تصنيف الخدمات
+                    </ng-template>
 
-        </div>
-        <div class="card-body">
-          <form [formGroup]="insertForm" (ngSubmit)="onSubmit()">
-            <div class="row form-group">
-              <!--regionNameAR-->
-              <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
-                <label for="nameA"> أسم التصنيف  باللغة العرببة</label>
-                <input disableEnglish class="form-control" id="nameA" type="text" formControlName="titleAr"
-                  [tooltip]="fc.titleAr.errors?.required ? 'هذا الحقل مطلوب' : null" container="nameA"
-                  [isDisabled]="!((fc.titleAr.errors?.required && fc.titleAr.touched) )"
-                  [class.is-valid]="fc.titleAr.valid && (fc.titleAr.touched || fc.titleAr.value)"
-                  [class.is-invalid]="fc.titleAr.invalid && (fc.titleAr.touched )"><!-- onlyAlphabets -->
-              </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="categoryForm"    (ngSubmit)="onSubmit()">
+                        <div class="card-body container row p-0  col-12">
+                            <div class="col-12 col-md-8 row">
+                                <!-- name -->
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group mb-3">
+                                        <label for="nameAr">أسم التصنيف  باللغة العربية </label>
+                                        <input class="form-control" id="nameAr" type="text" placeholder="أسم تصنيف الخدمات"
+                                            formControlName="titleAr" disableEnglish
+                                            [tooltip]="fc.titleAr.errors?.required ? 'أسم تصنيف الخدمات باللغة العربية مطلوب' : null"
+                                            [isDisabled]="!(fc.titleAr.errors?.required && fc.titleAr.touched)"
+                                            containerClass=""
+                                            [class.is-valid]="fc.titleAr.valid && (fc.titleAr.touched)"
+                                            [class.is-invalid]="fc.titleAr.invalid && (fc.titleAr.touched)" />
+                                    </div>
+                                </div>
 
-              <!--regionName-->
-              <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
-                <label for="name">أسم  التصنيف  الانجليزية</label>
-                <input disableArabic class="form-control" id="name" type="text" formControlName="title"
-                  [tooltip]="fc.title.errors?.required ? 'هذا الحقل مطلوب' : null" container="nameA"
-                  [isDisabled]="!((fc.title.errors?.required && fc.title.touched) )"
-                  [class.is-valid]="fc.title.valid && (fc.title.touched || fc.title.value)"
-                  [class.is-invalid]="fc.title.invalid && (fc.title.touched )"><!-- onlyAlphabets -->
-              </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group mb-3">
+                                        <label for="nameEn">أسم التصنيف  باللغة الانجليزية</label>
+                                        <input class="form-control" id="nameEn" type="text" placeholder="Category title"
+                                            formControlName="title" disableArabic
+                                            [tooltip]="fc.title.errors?.required ? 'أسم تصنيف الخدمات باللغة الانجليزية مطلوب' : null"
+                                            [isDisabled]="!(fc.title.errors?.required && fc.title.touched)"
+                                            containerClass="" [class.is-valid]="fc.title.valid && (fc.title.touched)"
+                                            [class.is-invalid]="fc.title.invalid && (fc.title.touched)" />
+                                    </div>
+                                </div>
 
-          
-          
+                                <!-- <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group mb-3">
+                                        <label for="descAr">وصف تصنيف الخدمات باللغة العربية</label>
+                                        <textarea id="descAr" class="form-control p-3 " placeholder="وصف تصنيف الخدمات هنا"
+                                            name="w3review" rows="3" cols="50" formControlName="descriptionAr"
+                                            [tooltip]="fc.descriptionAr.errors?.required ? 'وصف تصنيف الخدمات باللغة العربية مطلوب' : null"
+                                            [isDisabled]="!(fc.descriptionAr.errors?.required && fc.descriptionAr.touched)"
+                                            containerClass="" disableEnglish
+                                            [class.is-valid]="fc.descriptionAr.valid && (fc.descriptionAr.touched)"
+                                            [class.is-invalid]="fc.descriptionAr.invalid && (fc.descriptionAr.touched)">
+                                        </textarea>
+                                    </div>
+                                </div> -->
+
+                                <!-- <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group mb-3">
+                                        <label for="descEn">وصف تصنيف الخدمات باللغة الانجليزية </label>
+
+                                        <textarea id="descEn" class="form-control p-3 "
+                                            placeholder="Category description here" name="w3review" rows="3" cols="50"
+                                            formControlName="description"
+                                            [tooltip]="fc.description.errors?.required ? 'وصف تصنيف الخدمات باللغة الانجليزية مطلوب' : null"
+                                            [isDisabled]="!(fc.description.errors?.required && fc.description.touched)"
+                                            containerClass="" disableArabic
+                                            [class.is-valid]="fc.description.valid && (fc.description.touched)"
+                                            [class.is-invalid]="fc.description.invalid && (fc.description.touched)">
+                                            </textarea>
+                                    </div>
+                                </div> -->
+
+                            
+
+                                <div class="mb-3 col-lg-12 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="orderTime">ترتيب تصنيف الخدمات</label>
+                                        <input class="form-control" id="orderTime" type="number" placeholder="0"
+                                            formControlName="order"  min="1" onlyNumbers
+                                            [tooltip]="fc.order.errors?.required ? ' ترتيب تصنيف الخدمات مطلوب' : null"
+                                            [isDisabled]="!(fc.order.errors?.required && fc.order.touched)"
+                                            containerClass="" [class.is-valid]="fc.order.valid && (fc.order.touched)"
+                                            [class.is-invalid]="fc.order.invalid && (fc.order.touched)" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-3 col-lg-12 col-md-12 col-sm-12">
+                                  <label> اختر تصنيف الخدمات الأب</label>
+                                  <ng-select #parentId formControlName="parentId" [selectOnTab]="true"
+                                      [tooltip]="fc.parentId.errors?.required ? 'هذا الحقل مطلوب' : null"
+                                      class="form-control p-0" labelForId="1"
+                                      [isDisabled]="!(fc.parentId.errors && fc.parentId.touched)"
+                                      [class.is-valid]="fc.parentId.valid && fc.parentId.touched && fc.parentId.value"
+                                      [class.is-invalid]="fc.parentId.invalid && (fc.parentId.touched)">
+                                      <ng-option *ngFor="let parent of categories$" [value]="parent.id"
+                                          [disabled]="parent.id == category?.id">
+                                          {{parent.title}}
+                                      </ng-option>
+                                  </ng-select>
+                              </div>
+
+                            </div>
+
+                            <!-- image -->
+                            <div class="col-12 col-md-4 d-flex align-items-center">
+                                <div class="col-12">
+                                    <div class="col-12 my-3 d-flex justify-content-center">
+                                        <img src="{{ imgURL }}" class="image-style" width="250" height="250" />
+                                    </div>
+                                    <div class="col-12 ChangeProfilePhoto-block d-flex justify-content-center">
+                                        <!--  -->
+                                        <input type="file" formControlName="categoryImage" #file accept="image/*"
+                                            id="getFile" style="display: none" (change)="preview(file.files)" />
+
+                                        <button type="button" onclick="document.getElementById('getFile').click()"
+                                            class="changePhoto-btn">
+                                            اضف صورة لتصنيف الخدمات
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="update; else elseBlock">
+                            <button class="btn btn-primary pull-right" [disabled]="requestSent" type="submit">
+                                تعديل
+                            </button>
+                        </div>
+
+                        <ng-template #elseBlock>
+                            <button class="btn btn-primary pull-right" [disabled]="requestSent" type="submit">
+                                إضافة
+                            </button>
+                        </ng-template>
+
+                    </form>
+                </div>
             </div>
-            <div *ngIf="update; else elseBlock">
-              <button class="btn btn-primary pull-right mt-3" [disabled]="requestSent"  type="submit">
-                تعديل
-              </button>
-            </div>
-            <ng-template #elseBlock>
-              <button class="btn btn-primary pull-right mt-3" [disabled]="requestSent" type="submit">
-                إضافة
-              </button>
-            </ng-template>
-          </form>
         </div>
-      </div>
     </div>
-  </div>
 </div>

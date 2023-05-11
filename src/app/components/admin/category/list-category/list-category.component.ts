@@ -40,11 +40,13 @@ export class ListCategoryComponent extends PaginationComponent implements OnInit
   }
   getCategories()
   {
+  
     this.cateogryApiService.getCategoryList(this.pager).subscribe(
       (response: any) => {
-        this.response = response.data;
-        this.Cateogy_List = response.data.items;
-        this.totalCount = response.totalCount
+        this.response = response?.data;
+        this.Cateogy_List = response?.data?.items || [];
+        this.totalCount = response?.totalCount
+        
       }
     )
   }
@@ -53,26 +55,9 @@ export class ListCategoryComponent extends PaginationComponent implements OnInit
     this.router.navigateByUrl("content/admin/insert-category");
   }
 
-  // update(id: number) {
-
-    
-  //  this.cateogryApiService.getCategoryById(id).subscribe((res)=>{
-  //   this.cateogryApiService.Data.next(res.data);
-  //  })
-  //  this.router.navigateByUrl("content/admin/insert-category");
-
-  // }
-  // update(item: any) {
-  //   this.cateogryApiService.category = item;
-  //   this.router.navigate(['content/admin/update-category', item.id]);
-
-  // }
+  
   update(id: any) {
-    // // this.cateogryApiService.getCategoryById(category.id).subscribe((res)=>{
-    // //   this.cateogryApiService.category = res.data;
-    // // })
-    // alert(categoryId)
-    // this.router.navigateByUrl("content/admin/update-category",categoryId);
+  
     this.router.navigateByUrl(`content/admin/update-category/${id}`)
 
   }
