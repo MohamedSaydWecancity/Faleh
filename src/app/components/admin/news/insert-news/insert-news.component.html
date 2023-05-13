@@ -1,1 +1,134 @@
-<p>insert-news works!</p>
+<app-breadcrumb [title]="'إدارة الاخبار '" [active_item]="'Form Wizard'"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="padding-bottom:5px !important ;">
+                    <div *ngIf="update; else elseBlock1">
+                        <h5 class="pb-2">تعديل خبر موجود</h5>
+                        يمكنك تعديل خبر أو أكثر فى قائمة  الاخبار
+                    </div>
+                    <ng-template #elseBlock1>
+                        <h5 class="pb-2">إضافة خبر جديد</h5>
+                        يمكنك إضافة خبر أو أكثر فى قائمة الاخبار 
+                    </ng-template>
+
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="NewsForm"    (ngSubmit)="onSubmit()">
+                        <div class="card-body container row p-0  col-12">
+                            <div class="col-12 col-md-8 row">
+                                <!-- name -->
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group mb-3">
+                                        <label for="nameAr">أسم الخبر  باللغة العربية </label>
+                                        <input class="form-control" id="nameAr" type="text" placeholder="أسم  الخبر "
+                                            formControlName="titleAr" disableEnglish
+                                            [tooltip]="fc.titleAr.errors?.required ? 'أسم الخبر  باللغة العربية مطلوب' : null"
+                                            [isDisabled]="!(fc.titleAr.errors?.required && fc.titleAr.touched)"
+                                            containerClass=""
+                                            [class.is-valid]="fc.titleAr.valid && (fc.titleAr.touched)"
+                                            [class.is-invalid]="fc.titleAr.invalid && (fc.titleAr.touched)" />
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group mb-3">
+                                        <label for="nameEn">أسم الخبر  باللغة الانجليزية</label>
+                                        <input class="form-control" id="nameEn" type="text" placeholder="News Title "
+                                            formControlName="title" disableArabic
+                                            [tooltip]="fc.title.errors?.required ? 'أسم  الخبر باللغة الانجليزية مطلوب' : null"
+                                            [isDisabled]="!(fc.title.errors?.required && fc.title.touched)"
+                                            containerClass="" [class.is-valid]="fc.title.valid && (fc.title.touched)"
+                                            [class.is-invalid]="fc.title.invalid && (fc.title.touched)" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group mb-3">
+                                        <label for="nameAr"> المحتوي  باللغة العربية </label>
+                                        <input class="form-control" id="nameAr" type="text" placeholder="  المحتوي"
+                                            formControlName="contentAr" disableEnglish
+                                            [tooltip]="fc.contentAr.errors?.required ? ' المحتوي الخدمات باللغة العربية مطلوب' : null"
+                                            [isDisabled]="!(fc.contentAr.errors?.required && fc.contentAr.touched)"
+                                            containerClass=""
+                                            [class.is-valid]="fc.contentAr.valid && (fc.contentAr.touched)"
+                                            [class.is-invalid]="fc.contentAr.invalid && (fc.contentAr.touched)" />
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group mb-3">
+                                        <label for="nameEn"> المحتوي  باللغة الانجليزية</label>
+                                        <input class="form-control" id="nameEn" type="text" placeholder="Content "
+                                            formControlName="content" disableArabic
+                                            [tooltip]="fc.content.errors?.required ? '  المحتوي باللغة الانجليزية مطلوب' : null"
+                                            [isDisabled]="!(fc.content.errors?.required && fc.content.touched)"
+                                            containerClass="" [class.is-valid]="fc.content.valid && (fc.content.touched)"
+                                            [class.is-invalid]="fc.content.invalid && (fc.content.touched)" />
+                                    </div>
+                                </div>
+
+                           
+                            
+
+                                <div class="mb-3 col-lg-12 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="orderTime">  التاريخ</label>
+                                        <input class="form-control" id="orderTime" type="date" placeholder="0"
+                                            formControlName="date"  min="1" onlyNumbers
+                                            [tooltip]="fc.date.errors?.required ? '    تاريخ' : null"
+                                            [isDisabled]="!(fc.date.errors?.required && fc.date.touched)"
+                                            containerClass="" [class.is-valid]="fc.date.valid && (fc.date.touched)"
+                                            [class.is-invalid]="fc.date.invalid && (fc.date.touched)" />
+                                    </div>
+                                </div>
+
+                          
+
+                            </div>
+
+                            <!-- image -->
+                            <div class="col-12 col-md-4 d-flex align-items-center">
+                                <div class="col-12">
+                                    <div class="col-12 my-3 d-flex justify-content-center">
+                                        <img src="{{ imgURL }}" class="image-style" width="250" height="250" />
+                                    </div>
+                                    <div class="col-12 ChangeProfilePhoto-block d-flex justify-content-center">
+                                        <!--  -->
+                                        <input type="file" formControlName="categoryImage" #file accept="image/*"
+                                            id="getFile" style="display: none" (change)="preview(file.files)" />
+
+                                        <button type="button" onclick="document.getElementById('getFile').click()"
+                                            class="changePhoto-btn">
+                                            اضف صورة للخبر
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="update; then updateBlock; else elseBlock"></div>
+
+                        <ng-template #updateBlock>
+                          <div>
+                            <button class="btn btn-primary pull-right" [disabled]="requestSent" type="submit">
+                              تعديل
+                            </button>
+                          </div>
+                        </ng-template>
+                        
+                        <ng-template #elseBlock>
+                          <div>
+                            <button class="btn btn-primary pull-right" [disabled]="requestSent" type="submit">
+                              إضافة
+                            </button>
+                          </div>
+                        </ng-template>
+                        
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

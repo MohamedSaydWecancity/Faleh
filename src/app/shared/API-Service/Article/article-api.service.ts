@@ -42,5 +42,8 @@ export class ArticleApiService {
   deleteArticle(acticleId:number) : Observable<GenericResponse<{}>> {
     return this.http.get<GenericResponse<{}>>(`${environment.serverUrl}/Article/Delete?id=${acticleId}`)
   }
- 
+  deleteArticleImageByImageId(id:number)  : Observable<GenericResponse<ArticleImages>> {
+    return this.http.get<GenericResponse<ArticleImages>>(`${environment.serverUrl}/ArticleImage/Delete?id=${id}`)
+
+  }
 }

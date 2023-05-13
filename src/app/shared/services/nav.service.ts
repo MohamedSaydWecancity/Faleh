@@ -109,6 +109,16 @@ export class NavService implements OnDestroy {
           title: "View-product",
           type: "link",
         },
+        {
+          path: "admin/ListCategory",
+          title: "View-category",
+          type: "link",
+        },
+        {
+          path: "admin/ListArticle",
+          title: "View-article",
+          type: "link",
+        },
       ],
     },
  

@@ -17,7 +17,7 @@ export class NewsApiService {
   
   }
   updateNews(data:FormData): Observable<GenericResponse<GetNews>> {
-    return this.http.post<GenericResponse<GetNews>>(`${environment.serverUrl}/News/Create`,data)
+    return this.http.post<GenericResponse<GetNews>>(`${environment.serverUrl}/News/Update`,data)
   
   }
   getNewsById(acticleId:number): Observable<GenericResponse<GetNewsById>> {

@@ -17,6 +17,7 @@ export const environment = {
   //http://falehapi.wecancity.com/swagger/index.html
   ,serverFirstHalfOfImageUrl:"https://falehapi.wecancity.com/"
   ,  defaultImage: 'assets/images/statics/personAvatar.png',
+  url :"https://falehapi.wecancity.com/"
 
 
 };

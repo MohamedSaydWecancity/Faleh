@@ -12,6 +12,8 @@ import { InsertCategoryComponent } from "./category/insert-category/insert-categ
 import { ListKeywordComponent } from "./keyword/list-keyword/list-keyword.component";
 import { ListCustomerComponent } from "./Customer/list-customer/list-customer.component";
 import { ListQuestionComponent } from "./Question/list-question/list-question.component";
+import { ListNewsComponent } from "./news/list-news/list-news.component";
+import { InsertNewsComponent } from "./news/insert-news/insert-news.component";
 
 
 
@@ -68,8 +70,21 @@ const routes: Routes = [
            {
             path :"ListQuestion",
             component:ListQuestionComponent
+           }
+           ,
+        {
+            path :"ListNews",
+            component:ListNewsComponent
            },
-           //
+           {
+            path: 'content/admin/update-news/:id',
+            component: InsertNewsComponent
+          },
+          {
+            path: 'content/admin/insert-news',
+            component: InsertNewsComponent
+          }  
+           //ListNewsComponent
            
 ],
     },
