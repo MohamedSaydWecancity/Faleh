@@ -14,6 +14,8 @@ import { ListCustomerComponent } from "./Customer/list-customer/list-customer.co
 import { ListQuestionComponent } from "./Question/list-question/list-question.component";
 import { ListNewsComponent } from "./news/list-news/list-news.component";
 import { InsertNewsComponent } from "./news/insert-news/insert-news.component";
+import { ListVideoComponent } from "./video/list-video/list-video.component";
+import { InsertVideoComponent } from "./video/insert-video/insert-video.component";
 
 
 
@@ -58,10 +60,7 @@ const routes: Routes = [
             path :"ListKeyword",
             component:ListKeywordComponent
            },
-          //  {
-          //   path: 'content/admin/update-keyword/:id',
-          //   component: InsertKeywordComponent
-          // },
+        
          
           {
             path :"ListCusotmers",
@@ -83,9 +82,21 @@ const routes: Routes = [
           {
             path: 'content/admin/insert-news',
             component: InsertNewsComponent
-          }  
+          } ,
            //ListNewsComponent
-           
+           {
+            path :"ListVideos",
+            component:ListVideoComponent
+           },
+           {
+            path: 'content/admin/update-video/:id',
+            component: InsertVideoComponent
+          },
+          {
+            path: 'content/admin/insert-video',
+            component: InsertVideoComponent
+          }  
+          ,
 ],
     },
 ];

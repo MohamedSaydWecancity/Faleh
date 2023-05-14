@@ -18,7 +18,7 @@ export class VideoApiService {
   
   }
   updateVideo(data:FormData): Observable<GenericResponse<GetVideo>> {
-    return this.http.post<GenericResponse<GetVideo>>(`${environment.serverUrl}/Video/Create`,data)
+    return this.http.post<GenericResponse<GetVideo>>(`${environment.serverUrl}/Video/Update`,data)
   
   }
   getVideoById(acticleId:number): Observable<GenericResponse<GetVideoById>> {

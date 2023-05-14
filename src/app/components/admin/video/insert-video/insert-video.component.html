@@ -1,0 +1,83 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="padding-bottom: 5px !important">
+                    <div *ngIf="update; else elseBlock1">
+                        <h5 class="pb-2">تعديل الفيديو متاح</h5>
+      </div>
+                    <ng-template #elseBlock1>
+                        <h5 class="pb-2">اضافه فيديو</h5>
+                        <span style="font-size: 14px">
+                        </span>
+                    </ng-template>
+                </div>
+                <div class="card-body">
+                    <form class="needs-validation" [formGroup]="InsertForm" autocomplete="off" (ngSubmit)="onSubmit()">
+                        <div class="form-row">
+                               <!-- title Arabic  -->
+                               <div class="col-lg-6 col-sm-12 mb-2">  عنوان الفيديو                
+                                <label for="validation01">
+                                </label>
+                                <input class="form-control" id="validation01" type="text" formControlName="TitleAr"
+                                    [tooltip]="fc.TitleAr.errors?.required ?  ('this field is required') : null"
+                                    [isDisabled]="!((fc.TitleAr.errors?.required && fc.TitleAr.touched) || validated)"
+                                    containerClass=""
+                                    [class.is-valid]="fc.TitleAr.valid && (fc.TitleAr.touched || !validated || fc.TitleAr.value)"
+                                    [class.is-invalid]="fc.TitleAr.invalid && (fc.TitleAr.touched || validated)" />
+                            </div>
+                            <!-- title  -->
+                            <div class="col-lg-6 col-sm-12 mb-2">                  
+                                <label for="validation01"> عنوان الفيديو بالانجليزيه
+                                </label>
+                                <input class="form-control" id="validation01" type="text" formControlName="Title"
+                                    [tooltip]="fc.Title.errors?.required ?  ('this field is required') : null"
+                                    [isDisabled]="!((fc.Title.errors?.required && fc.Title.touched) || validated)"
+                                    containerClass=""
+                                    [class.is-valid]="fc.Title.valid && (fc.Title.touched || !validated || fc.Title.value)"
+                                    [class.is-invalid]="fc.Title.invalid && (fc.Title.touched || validated)" />
+                            </div>
+                               
+                                   
+                                 <div class="col-12 mb-3 form-control" formControlName="categoriesIds">
+                                    <label for="validationCustom01">
+                                      </label>
+                                    <ng-multiselect-dropdown id="validationCustom02=3" placeholder="أختر تصنيف  أو أكتر من القائمة"
+                                      [settings]="dropdownSettings" formControlName="multCategories" 
+                                       [data]="CateogryList"
+                                      [(ngModel)]="selectedCateogries">
+                                    </ng-multiselect-dropdown>
+                                  </div> 
+                            
+                              
+                               
+                                  <div class="col-12 my-3">
+                                <img src="{{ videologo }}" class="image-style w-25" />
+                                <input type="file" formControlName="Video$" accept="video/*" #file id="getLogo"
+                                    style="display: none" accept="videp/*"
+                                    (change)="getVideoUrl($event) " />     
+                                                 <button type="button" onclick="document.getElementById('getLogo').click()"
+                                    class="btn btn-primary  w-25 d-block">
+                                    اضافه فيديو   
+                                </button>
+                            </div>
+                          
+                            <!-- </div> -->
+                        </div>
+                        <ng-template #elseBlock>
+                            <button class="btn btn-primary pull-right" [disabled]="!submit" type="submit">
+                                اضافه
+                            </button>
+                        </ng-template>
+                        <div *ngIf="update; else elseBlock">
+                            <button class="btn btn-primary pull-right" [disabled]="!submit" type="submit">
+                                تعديل
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

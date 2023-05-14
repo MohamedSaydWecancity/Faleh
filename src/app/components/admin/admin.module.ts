@@ -40,6 +40,8 @@ import { ListQuestionComponent } from './Question/list-question/list-question.co
 import { ListNewsComponent } from './news/list-news/list-news.component';
 import { InsertNewsComponent } from './news/insert-news/insert-news.component';
 import { ImagePopupComponent } from './article/image-popup/image-popup.component';
+import { ListVideoComponent } from './video/list-video/list-video.component';
+import { InsertVideoComponent } from './video/insert-video/insert-video.component';
 
 
 
@@ -57,6 +59,8 @@ import { ImagePopupComponent } from './article/image-popup/image-popup.component
     ListNewsComponent,
     InsertNewsComponent,
     ImagePopupComponent,
+    ListVideoComponent,
+    InsertVideoComponent,
     
     
   ],

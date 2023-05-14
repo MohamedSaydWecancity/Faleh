@@ -51,17 +51,14 @@ export class InsertArticleComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetData();
-    // this.checkEdit();
-    //
+    
 
     let id = this._activatedRoute.snapshot.params['id']
     console.log(id);
     debugger
     if (id) {
     this.id=id
-   //   this.checkEdit();
-     // this.getById(id); // call getById() before initForm()
-      // this.initForm(this.keywordApiService.keyword);
+
       this._articleApiService.getArticleById(Number(id)).subscribe((res) => {
         this.article = res.data;
         this.initiate(this.article); // Pass the article object to initiate() method
@@ -184,10 +181,7 @@ console.log(this.article)
       this.CateogryList = res.data;
     });
 
-    // this._keywordApiService.getKeyWordAllForList().subscribe((res) => {
-    // this.KeywordList = res.data;
-    // }
-    // );
+   
   }
 
   private loopform() {
@@ -305,6 +299,7 @@ console.log(this.article)
     if (!this.InsertForm.invalid ) {
       if (this.update) {
         this.editData();
+        
       } else {
         this.insertData();
       }
