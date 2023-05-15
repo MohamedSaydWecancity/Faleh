@@ -39,7 +39,7 @@
                             </div>
                                
                                    
-                                 <div class="col-12 mb-3 form-control" formControlName="categoriesIds">
+                                 <!-- <div class="col-12 mb-3 form-control" formControlName="categoriesIds">
                                     <label for="validationCustom01">
                                       </label>
                                     <ng-multiselect-dropdown id="validationCustom02=3" placeholder="أختر تصنيف  أو أكتر من القائمة"
@@ -47,8 +47,21 @@
                                        [data]="CateogryList"
                                       [(ngModel)]="selectedCateogries">
                                     </ng-multiselect-dropdown>
-                                  </div> 
-                            
+                                  </div>  -->
+                                  <div class="col-12">
+                                    <ng-select #categories formControlName="categoriesIds" [selectOnTab]="true"
+                                        [tooltip]="fc.categoriesIds.errors?.required ? 'هذا الحقل مطلوب' : null" class="form-control p-0"
+                                        labelForId="1" [multiple]="true" [closeOnSelect]="false" bindValue="id"
+                                        [isDisabled]="!(fc.categoriesIds.errors && fc.categoriesIds.touched)"
+                                        [class.is-valid]="fc.categoriesIds.valid && (fc.categoriesIds.touched)"
+                                        [class.is-invalid]="fc.categoriesIds.invalid && (fc.categoriesIds.touched)"
+                                        [(ngModel)]="selectedCateogries">
+                                        <ng-option *ngFor="let item of dropdownList$; index as i" [value]="item">
+                                            {{ item.title }}
+                                        </ng-option>
+                                        </ng-select>
+
+                                </div>
                               
                                
                                   <div class="col-12 my-3">

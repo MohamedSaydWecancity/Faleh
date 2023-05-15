@@ -20,9 +20,9 @@ export class UserApiService {
   }
     // This to post the events 
     Createuser(person: CreateUser): Observable<GenericResponse<GetUser>> {
-      const categoriesIds = person.roleId === 2 ? person.categoriesIds : null;
-      const modifiedPerson = { ...person, categoriesIds };
-      return this.http.post<GenericResponse<GetUser>>(`${environment.serverUrl}/User/Create`, modifiedPerson);
+      // const categoriesIds = person.roleId === 2 ? person.categoriesIds : null;
+      // const modifiedPerson = { ...person, categoriesIds };
+      return this.http.post<GenericResponse<GetUser>>(`${environment.serverUrl}/User/Create`, person);
     }
    // This to Update the events
    Updateuser(person :UpdateUser):Observable<GenericResponse<GetUser>>{

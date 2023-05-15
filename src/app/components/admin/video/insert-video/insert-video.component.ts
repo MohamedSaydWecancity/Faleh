@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { GetVideo } from 'src/app/shared/Models/Video/Video';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { GetCategoryAllForList } from 'src/app/shared/Models/Category/category';
 
 @Component({
   selector: 'app-insert-video',
@@ -15,25 +16,27 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 })
 export class InsertVideoComponent implements OnInit {
 
-  //VideoForm: FormGroup;
   public VideoObject:any;
-  imgURL: any = "";
-//  file: File = null;
-  categories$: any[];
-  video$: GetVideo;
-  ///VideoFormPic = new FormData();
+  
   private VideoForm= new FormData();
   public InsertForm: FormGroup;
-  requestSent: boolean;
+ 
   private video: File;
   public Video :any;
-  CateogryList: any[];
+  requestSent: boolean;
+  selectedCateogries = [];
+  imgURL: any = "";
+  // categories$: any[];
+  dropdownList$: GetCategoryAllForList[];
+
+  video$: GetVideo;
   public videologo: string;
   public submit: boolean = true;
-  selectedCateogries = [];
   public dropdownSettings: IDropdownSettings = {};
   public dropdownList: any = [];
+  
   public selectedCateroriesItems: any = [];
+  
 
   id: any;
   public update: boolean = false;
@@ -54,30 +57,9 @@ export class InsertVideoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.GetData();
+    this.getCategories();
 
-    // this.GetData();
     
-
-    // let id = this.route.snapshot.params['id']
-    // console.log(id);
-    // debugger
-    // if (id) {
-    // this.id=id
-
-    //   this.videoApiService.getVideoById(Number(id)).subscribe((res) => {
-    //     this.VideoObject = res.data;
-    //     this.initForm(this.VideoObject); // Pass the video object to initiate() method
-    //     this.update = true;
-    //     console.log(this.update)
-    //   });
-     
-    // }
-    //  else {
-    //   this.update = false;
-    //  // this.checkEdit();
-    //  this.initForm();
-    // }
     let id = this.route.snapshot.params['id']
    
     debugger
@@ -88,7 +70,6 @@ export class InsertVideoComponent implements OnInit {
     }
      else {
       this.update = false;
-     // this.checkEdit();
      this.initForm();
     }
 
@@ -100,11 +81,7 @@ export class InsertVideoComponent implements OnInit {
       Title: [video?.title || '', Validators.required],
       TitleAr: [video?.titleAr || '', Validators.required],
       Video$: [video?.video||""],
-      // multCategories: [video.VideoCategories||null],
-
-       categoriesIds: [video.articleCategories||null],
-
-
+      categoriesIds: [this.selectedCateogries || []],
     });
     this.dropdownSettings = {
       singleSelection: false,
@@ -150,8 +127,8 @@ export class InsertVideoComponent implements OnInit {
 
 
   getCategories() {
-    this.categoryApiService.getMainForList().subscribe(res => {
-      this.categories$ = res.data;
+    this.categoryApiService.getMainForList().subscribe((res) => {
+      this.dropdownList$ = res.data;
     });
   }
 
@@ -159,21 +136,20 @@ export class InsertVideoComponent implements OnInit {
      
     this.VideoForm = new FormData();
    
-    Object.keys(this.InsertForm.value).forEach((key) => {
-      console.log(key)
-      if (typeof this.InsertForm.value[key] != "object")
-     
-        this.VideoForm.append(key, this.InsertForm.value[key]);
-      else 
-      if (typeof this.InsertForm.value[key] == "object" && this.InsertForm.value[key] != null)
-      {
-        Object.keys(this.InsertForm.value[key]).forEach((subkey) => {
-          this.VideoForm.append(key, this.InsertForm.value[key][subkey].id);
-        });
-      }
+      Object.keys(this.InsertForm.value).forEach((key) => {
+        if (this.InsertForm.value[key] == null) {
+        } else {
+          if (typeof this.InsertForm.value[key] !== "object")
+            this.VideoForm.append(key, this.InsertForm.value[key]);
+          else
+            Object.keys(this.InsertForm.value[key]).forEach((subkey) => {
+              this.VideoForm.append(key, this.InsertForm.value[key][subkey]);
+            });
+        }
+      });
       
-    });
-    this.VideoForm.append('Video', this.video);
+    
+    this.VideoForm.append('video', this.video);
     console.log(this.VideoForm)
   }
 
@@ -220,29 +196,9 @@ export class InsertVideoComponent implements OnInit {
   
 
   }
-  private GetData() {
-    this.categoryApiService.getMainForList().subscribe((res) => {
-      this.CateogryList = res.data;
-    });
-  }
 
-  getSelectedCateogries() {
-    return this.selectedCateogries;
-  }
 
  
-  ChangeCaterogy() {
-    this.SelectedCategoris();
-  }
-
-  SelectedCategoris() {
-    this.selectedCateroriesItems = [];
-    if (this.fc.categoriesIds.value !== null) {
-      this.categoryApiService.getMainForList().subscribe((res) => {
-        if (res.data) this.selectedCateroriesItems = res.data;
-      });
-    } else this.selectedCateroriesItems = [];
-  }
   onSubmit() {
     debugger
     if (this.InsertForm.status == "VALID") {
