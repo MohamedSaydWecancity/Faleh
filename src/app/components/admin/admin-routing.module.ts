@@ -16,6 +16,8 @@ import { ListNewsComponent } from "./news/list-news/list-news.component";
 import { InsertNewsComponent } from "./news/insert-news/insert-news.component";
 import { ListVideoComponent } from "./video/list-video/list-video.component";
 import { InsertVideoComponent } from "./video/insert-video/insert-video.component";
+import { ListUserComponent } from "./User/list-user/list-user.component";
+import { InsertUserComponent } from "./User/insert-user/insert-user.component";
 
 
 
@@ -40,11 +42,11 @@ const routes: Routes = [
             component: InsertArticleComponent
           },
            {
-            path: "insert-article",
+            path: "content/admin/insert-article",
             component: InsertArticleComponent,
         },
         {
-            path :"ListCategory",
+            path :"content/admin/ListCategory",
             component:ListCategoryComponent
            },
            {
@@ -57,22 +59,22 @@ const routes: Routes = [
           }  
           ,
         {
-            path :"ListKeyword",
+            path :"content/admin/ListKeyword",
             component:ListKeywordComponent
            },
         
          
           {
-            path :"ListCusotmers",
+            path :"content/admin/ListCusotmers",
             component:ListCustomerComponent
            },
            {
-            path :"ListQuestion",
+            path :"content/admin/ListQuestion",
             component:ListQuestionComponent
            }
            ,
         {
-            path :"ListNews",
+            path :"content/admin/ListNews",
             component:ListNewsComponent
            },
            {
@@ -83,9 +85,9 @@ const routes: Routes = [
             path: 'content/admin/insert-news',
             component: InsertNewsComponent
           } ,
-           //ListNewsComponent
+           
            {
-            path :"ListVideos",
+            path :"content/admin/ListVideos",
             component:ListVideoComponent
            },
            {
@@ -95,8 +97,20 @@ const routes: Routes = [
           {
             path: 'content/admin/insert-video',
             component: InsertVideoComponent
-          }  
+          },
+          {
+            path:'content/admin/ListUsers',
+            component:ListUserComponent
+          }
           ,
+          {
+            path: 'content/admin/update-user/:id',
+            component: InsertUserComponent
+          },
+          {
+            path: 'content/admin/insert-user',
+            component: InsertUserComponent
+          },
 ],
     },
 ];

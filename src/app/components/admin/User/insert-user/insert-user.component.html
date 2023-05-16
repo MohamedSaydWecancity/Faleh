@@ -1,0 +1,135 @@
+<app-breadcrumb [title]="'إدارة المستخدمين'" [active_item]="'Form Wizard'"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="padding-bottom: 5px !important ">
+                    <div *ngIf="update; else elseBlock1">
+                        <h5 class="pb-2">تعديل مستخدم</h5>
+                        يمكنك تعديل مستخدم أو أكثر فى قائمه المستخدمين
+                    </div>
+                    <ng-template #elseBlock1>
+                        <h5 class="pb-2">إضافة مستخدم جديد</h5>
+                        يمكنك إضافة مستخدم أو أكثر فى قائمه المستخدمين
+                    </ng-template>
+                </div>
+                <div class="card-body">
+                    <!-- <form [formGroup]="insertForm" (Submit)="onSubmit()"> -->
+                        <form class="needs-validation" [formGroup]="insertForm" autocomplete="off" (ngSubmit)="onSubmit()">
+
+                        <div class="card-body container row col-12 p-0">
+                            <div class="col-12 col-md-8 row">
+                                <!-- NameAr -->
+                                <div class="col-4">
+                                    <div class="form-group mb-3">
+                                        <label for="nameAr">الاسم  </label>
+                                        <input class="form-control" id="nameAr" type="text"
+                                            formControlName="nameAr" disableEnglish
+                                            [tooltip]="fc.nameAr.errors?.required ? 'أسم المستخدم اللغة العربية مطلوب' : null"
+                                            [isDisabled]="!((fc.nameAr.errors?.required && fc.nameAr.touched))"
+                                            containerClass=""
+                                            [class.is-valid]="fc.nameAr.valid && (fc.nameAr.touched)"
+                                            [class.is-invalid]="fc.nameAr.invalid && (fc.nameAr.touched)" />
+                                    </div>
+                                </div>
+
+                                <!-- Name -->
+                                <div class="col-4">
+                                    <div class="form-group mb-3">
+                                        <label for="name">الاسم بالانجليزيه </label>
+                                        <input class="form-control" id="name" type="text"
+                                            formControlName="name" disableEnglish
+                                            [tooltip]="fc.name.errors?.required ? 'أسم المستخدم اللغة العربية مطلوب' : null"
+                                            [isDisabled]="!((fc.name.errors?.required && fc.name.touched))"
+                                            containerClass=""
+                                            [class.is-valid]="fc.name.valid && (fc.name.touched)"
+                                            [class.is-invalid]="fc.name.invalid && (fc.name.touched)" />
+                                    </div>
+                                </div>
+                                 <!-- User Name -->
+                                 <div class="col-4">
+                                    <div class="form-group mb-3">
+                                        <label for="username">اسم المستخدم</label>
+                                        <input class="form-control" id="username" type="text"
+                                            formControlName="username" disableEnglish
+                                            [tooltip]="fc.username.errors?.required ? 'أسم المستخدم مطلوب' : null"
+                                            [isDisabled]="!((fc.username.errors?.required && fc.username.touched))"
+                                            containerClass=""
+                                            [class.is-valid]="fc.username.valid && (fc.username.touched)"
+                                            [class.is-invalid]="fc.username.invalid && (fc.username.touched)" />
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group mb-3">
+                                        <label> خصص قسم لهذا المستخدم </label>
+
+                                        <ng-select #roleId formControlName="roleId" [selectOnTab]="true"
+                                            [tooltip]="fc.roleId.errors?.required ? 'هذا الحقل مطلوب' : null"
+                                            (change)="onRoleChange($event)">
+                                            class="form-control p-0" labelForId="3"
+                                            [isDisabled]="!(fc.roleId.errors && fc.roleId.touched)"
+                                            [class.is-valid]="fc.roleId.valid && (fc.roleId.touched)"
+                                            [class.is-invalid]="fc.roleId.invalid && (fc.roleId.touched)">
+                                            <ng-option *ngFor="let item of roles$ | async" [value]="item.id">
+                                                {{item.title}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                          
+                                <!-- <div class="col-6" *ngIf="fc.passwordHash"> -->
+                                    <div class="col-6" *ngIf="fc.password">
+
+                                    <div class="form-group mb-3">
+                                        <label for="password"> كلمة المرور</label>
+                                        <input class="form-control" id="password" type="password"
+                                            formControlName="password"
+                                            [tooltip]="fc.password.errors?.required ? 'كلمة المرور مطلوب' : null"
+                                            required
+                                            [isDisabled]="!((fc.password.errors?.required && fc.password.touched))"
+                                            containerClass=""
+                                            [class.is-valid]="fc.password.valid && (fc.password.touched)"
+                                            [class.is-invalid]="fc.password.invalid && (fc.password.touched)" />
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <ng-select #categories formControlName="categoriesIds" [selectOnTab]="true"
+                                        [tooltip]="fc.categoriesIds.errors?.required ? 'هذا الحقل مطلوب' : null" class="form-control p-0"
+                                        labelForId="1" [multiple]="true" [closeOnSelect]="false" bindValue="id"
+                                        [isDisabled]="!(fc.categoriesIds.errors && fc.categoriesIds.touched)"
+                                        [class.is-valid]="fc.categoriesIds.valid && (fc.categoriesIds.touched)"
+                                        [class.is-invalid]="fc.categoriesIds.invalid && (fc.categoriesIds.touched)"
+                                        [(ngModel)]="selectedCateogries">
+                                        <ng-option *ngFor="let item of dropdownList$; index as i" [value]="item">
+                                            {{ item.title }}
+                                        </ng-option>
+                                        </ng-select>
+
+                                </div>
+                               
+
+                            </div>
+
+                        
+                        </div>
+
+                        <div *ngIf="update; else elseBlock">
+                            <button class="btn btn-primary pull-right" [disabled]="requestSent" 
+                            type="submit">
+                                تعديل
+                            </button>
+                        </div>
+
+                        <ng-template #elseBlock>
+                            <button class="btn btn-primary pull-right" [disabled]="requestSent" type="submit">
+                                إضافة
+                            </button>
+                        </ng-template>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

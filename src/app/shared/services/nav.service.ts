@@ -93,27 +93,19 @@ export class NavService implements OnDestroy {
     this.screenWidth.next(width);
   }
 
-  MENUITEMS_andalus: Menu[] = [
+  MENUITEMS_Faleh: Menu[] = [
     {
-      headTitle1: "Elandalus",
+      headTitle1: "Faleh",
       headTitle2: "Management ",
     },
     {
-      title: "Product",
+      title: "article",
       icon: "activity",
       type: "sub",
       badgeType: "success",
       children: [
-        {
-          path: "admin/ViewProduct",
-          title: "View-product",
-          type: "link",
-        },
-        {
-          path: "admin/ListCategory",
-          title: "View-category",
-          type: "link",
-        },
+       
+        
         {
           path: "admin/ListArticle",
           title: "View-article",
@@ -121,6 +113,95 @@ export class NavService implements OnDestroy {
         },
       ],
     },
+    {
+      title: "Category",
+      icon: "activity",
+      type: "sub",
+      badgeType: "success",
+      children: [
+        {
+          path: "admin/ListCategory",
+          title: "View-category",
+          type: "link",
+        }
+       
+      ],
+    }
+    ,
+    {
+      title: "Question",
+      icon: "activity",
+      type: "sub",
+      badgeType: "success",
+      children: [
+        {
+          path: "admin/ListQuestion",
+          title: "view-question",
+          type: "link",
+        }
+       
+      ],
+    }
+    ,
+    {
+      title: "KeyWord",
+      icon: "activity",
+      type: "sub",
+      badgeType: "success",
+      children: [
+        {
+          path: "admin/ListKeyword",
+          title: "View-keyword",
+          type: "link",
+        }
+       
+      ],
+    }
+    ,
+    {
+      title: "customers",
+      icon: "activity",
+      type: "sub",
+      badgeType: "success",
+      children: [
+        {
+          path: "admin/ListCusotmers",
+          title: "View-customer",
+          type: "link",
+        }
+       
+      ],
+    }
+    ,
+    {
+      title: "News",
+      icon: "activity",
+      type: "sub",
+      badgeType: "success",
+      children: [
+        {
+          path: "admin/ListNews",
+          title: "View-News",
+          type: "link",
+        }
+       
+      ],
+    }
+    ,
+    {
+      title: "Users",
+      icon: "activity",
+      type: "sub",
+      badgeType: "success",
+      children: [
+        {
+          path: "admin/ListUsers",
+          title: "View-users",
+          type: "link",
+        }
+       
+      ],
+    }
  
   ];
 // ===============
@@ -329,7 +410,7 @@ export class NavService implements OnDestroy {
     },
   ];
 
-  items = new BehaviorSubject<Menu[]>(this.MENUITEMS_andalus);
+  items = new BehaviorSubject<Menu[]>(this.MENUITEMS_Faleh);
  
 
   
