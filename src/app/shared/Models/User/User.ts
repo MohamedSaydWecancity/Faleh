@@ -51,5 +51,8 @@ export interface UpdateUser
     id:number;
     categoriesIds :number[];
 }
-
-
+export interface GetRoles
+{
+    id:number;
+    title;
+}

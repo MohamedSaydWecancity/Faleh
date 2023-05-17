@@ -26,7 +26,6 @@ export class InsertVideoComponent implements OnInit {
   requestSent: boolean;
   selectedCateogries = [];
   imgURL: any = "";
-  // categories$: any[];
   dropdownList$: GetCategoryAllForList[];
 
   video$: GetVideo;
@@ -188,7 +187,7 @@ export class InsertVideoComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         })
-        this.router.navigateByUrl("content/admin/ListVideos");
+        this.router.navigateByUrl("/content/admin/ListVideos");
       },
       () => { this.requestSent = false; }
     )

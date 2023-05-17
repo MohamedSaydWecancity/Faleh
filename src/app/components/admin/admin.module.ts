@@ -42,6 +42,9 @@ import { InsertNewsComponent } from './news/insert-news/insert-news.component';
 import { ImagePopupComponent } from './article/image-popup/image-popup.component';
 import { ListVideoComponent } from './video/list-video/list-video.component';
 import { InsertVideoComponent } from './video/insert-video/insert-video.component';
+import { ListUserComponent } from './User/list-user/list-user.component';
+import { InsertUserComponent } from './User/insert-user/insert-user.component';
+import { ChangePasswordComponent } from './User/change-password/change-password.component';
 
 
 
@@ -61,6 +64,9 @@ import { InsertVideoComponent } from './video/insert-video/insert-video.componen
     ImagePopupComponent,
     ListVideoComponent,
     InsertVideoComponent,
+    ListUserComponent,
+    InsertUserComponent,
+    ChangePasswordComponent,
     
     
   ],

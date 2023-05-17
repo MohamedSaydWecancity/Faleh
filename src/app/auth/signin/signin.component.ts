@@ -64,6 +64,8 @@ export class SigninComponent implements OnInit {
       });
       localStorage.setItem('Authorization',res.data["token"]);
       localStorage.setItem('username', res.data["name"])
+      localStorage.setItem('FalehUserId', res.data['id'])
+
       this._LoginService.Data.next(res);
       this._Router.navigate(["/content/admin"]);
 
