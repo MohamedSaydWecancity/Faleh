@@ -47,7 +47,6 @@ import { environment } from "src/environments/environment";
       private fb: FormBuilder,
       private _articleApiService: ArticleApiService,
       private _catergoryApiService: CateogryApiService,
-      private _keywordApiService: KeywordApiService,
       private _router: Router,
       private _activatedRoute: ActivatedRoute
     ) {
@@ -119,32 +118,7 @@ import { environment } from "src/environments/environment";
         categoriesIds: [this.selectedCateogries || []],
       });
     }
-      // imgFile
-      // public  getLogoUrl(event: any) {
-      //   const reader = new FileReader();
-      //   if (event.target.files && event.target.files.length) {
-      //     const [file] = event.target.files;
-      //     this.articleImage = event.target.files[0];
-      //     reader.readAsDataURL(file);
-      //     reader.onload = () => {
-      //       this.articleLogoImage = reader.result as string;
-      //       this.logoForm?.append("articleImage", this.articleImage);
-      //     };
-      //   }
-      // }
-      // public getLogoUrl(event: any) {
-      //   const reader = new FileReader();
-      //   if (event.target.files && event.target.files.length) {
-      //     const [file] = event.target.files;
-      //     this.articleImage = event.target.files[0];
-      //     reader.readAsDataURL(file);
-      //     reader.onload = () => {
-      //     this.imageSrc = reader.result as string; // Update the image source
-      //     this.logoForm?.append("articleImage", this.articleImage);
-
-      //     };
-      //   }
-      // }
+     
       public getLogoUrl(event: any) {
         const file = event.target.files[0];
         this.InsertForm.patchValue({
@@ -176,47 +150,9 @@ import { environment } from "src/environments/environment";
     }
 
   
-  //   private getById(id): any {
-  //     this._articleApiService.getArticleById(id).subscribe((res) => {
-        
-  //       this.article = res.data;
-  // console.log(this.article)
-  //       this.initiate(this.article); // Pass the article object to initiate() method
-  //     });
-  //   }
-  //   getSelectedCateogries() {
-  //     return this.selectedCateogries;
-  //   }
+  
 
-  //   getSelectedKeywords() {
-  //     return this.selectedKeywords;
-  //   }
 
-  //   ChangeCaterogy() {
-  //     this.SelectedCategoris();
-  //   }
-
-  //   SelectedCategoris() {
-  //     this.selectedCateroriesItems = [];
-  //     if (this.fc.categoriesIds.value !== null) {
-  //       this._catergoryApiService.getMainForList().subscribe((res) => {
-  //         if (res.data) this.selectedCateroriesItems = res.data;
-  //       });
-  //     } else this.selectedCateroriesItems = [];
-  //   }
-
-  //   changeKeyword() {
-  //     this.SelectedKeywords();
-  //   }
-
-  //   SelectedKeywords() {
-  //     this.selectedCateroriesItems = [];
-  //     if (this.fc.keywordsIds.value !== null) {
-  //       this._keywordApiService.getKeyWordAllForList().subscribe((res) => {
-  //         if (res.data) this.selectedKeywordsItems = res.data;
-  //       });
-  //     } else this.selectedKeywordsItems = [];
-  //   }
 
     private GetCategoies() {
       this._catergoryApiService.getMainForList().subscribe((res) => {

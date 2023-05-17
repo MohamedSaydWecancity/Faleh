@@ -5,8 +5,28 @@ export interface LoginDto {
 }
 
 
-export class ChangePassword {
-    id:number;
+export interface ChangePassword {
     currentPassword: string;
     newPassword: string
 }
+
+
+export class LoginResponse {
+    message: string;
+    data:{
+        id:number,    
+        username: string,
+        token: string,
+        name: string,
+        roleId: number,
+        roleTitle:number
+
+
+    }
+    
+    success: boolean;
+ 
+}
+ 
+
+ 

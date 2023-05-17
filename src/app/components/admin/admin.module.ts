@@ -44,6 +44,7 @@ import { ListVideoComponent } from './video/list-video/list-video.component';
 import { InsertVideoComponent } from './video/insert-video/insert-video.component';
 import { ListUserComponent } from './User/list-user/list-user.component';
 import { InsertUserComponent } from './User/insert-user/insert-user.component';
+import { ChangePasswordComponent } from './User/change-password/change-password.component';
 
 
 
@@ -65,6 +66,7 @@ import { InsertUserComponent } from './User/insert-user/insert-user.component';
     InsertVideoComponent,
     ListUserComponent,
     InsertUserComponent,
+    ChangePasswordComponent,
     
     
   ],

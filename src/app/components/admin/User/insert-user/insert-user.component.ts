@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import{UserApiService} from '../../../../shared/API-Service/User/user-api.service';
 import{CateogryApiService} from '../../../../shared/API-Service/Cateogry/cateogry-api.service';
 
-import { GetRoles } from 'src/app/shared/Models/User/User';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { GetRoles, UpdateUser } from 'src/app/shared/Models/User/User';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { GetCategoryAllForList } from 'src/app/shared/Models/Category/category';
 import { Observable, of } from 'rxjs';
@@ -21,11 +21,14 @@ export class InsertUserComponent implements OnInit {
   public update: boolean = false;
   public insertForm: FormGroup;
   requestSent: boolean;
+  user:UpdateUser;
   dropdownList$: GetCategoryAllForList[];
   selectedCateogries = [];
+  id:any;
 
   constructor(private userApiService:UserApiService,private categoryService: CateogryApiService,
     private fb: FormBuilder,
+    private _activatedRoute: ActivatedRoute,
     private router: Router) { 
       this.initForm()
 
@@ -34,6 +37,13 @@ export class InsertUserComponent implements OnInit {
   ngOnInit(): void {
     this.getRole();
     this.getCategories();
+    let id = this._activatedRoute.snapshot.params['id']
+    if (id) {
+      this.getUserById(id)
+      this.update = true;
+    } else {
+      this.update = false;
+    }
     this.initForm();
 
     
@@ -64,22 +74,7 @@ export class InsertUserComponent implements OnInit {
   get fc() {
     return this.insertForm.controls;
   }
-  // insertUser() {
-  //   this.requestSent = true;
-    
-  //   this.userApiService.Createuser(this.insertForm.value).subscribe(
-  //     response => {
-  //       Swal.fire({
-  //         icon: 'success',
-  //         title: "تم إدخال المستخدم بنجاح",
-  //         showConfirmButton: false,
-  //         timer: 1500
-  //       })
-  //       this.router.navigateByUrl("content/admin/ListUsers");
-  //     },
-  //     () => {this.requestSent = false}
-  //   )
-  // }
+
   insertUser() {
     this.requestSent = true;
     this.userApiService.Createuser(this.insertForm.value).subscribe(
@@ -111,9 +106,16 @@ export class InsertUserComponent implements OnInit {
       () => {this.requestSent = false}
     )
   }
+  getUserById(id: any) {
+    this.userApiService.getUserById(id).subscribe(async (res: any) => {
+      this.user = await res.data;
+      this.initForm(this.user);
+      this.insertForm.addControl('id', new FormControl(this.user?.id));
+      this.insertForm.removeControl('password');
+    });
+  }
 
   onSubmit() {
-   // console.log(this.insertForm.controls)
     if (this.insertForm.status == "VALID") {
       if (this.update == true) {
         this.updateUser();
@@ -124,10 +126,15 @@ export class InsertUserComponent implements OnInit {
       this.insertForm.markAllAsTouched();
     }
   }
+
   onRoleChange(id) {
-    console.log(id)
-    if (id === 1) {
-      this.insertForm.get('categoriesIds').setValue(null);
+    if (id == 1) {
+    this.insertForm.removeControl('categoriesIds');
+    this.selectedCateogries = [];
+    } else {
+    if (!this.insertForm.contains('categoriesIds')) {
+    this.insertForm.addControl('categoriesIds', this.fb.control([]));
     }
-  }
+    }
+    }
 }
