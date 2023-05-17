@@ -1,37 +1,42 @@
-<!--
+<div class ="Mdak-header">
+  <button type="button" class="btn btn-danger float-left mr-3" 
+  [disabled]="!disabled" (click)="modalclose()" >رجوع</button>
+  <button  type="button" style="height: 35px;" class="btn  float-left" 
+  [disabled]="disabled" (click)="Submit();">حفظ</button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <!-- ...other content -->
+    <div class="col-sm-12">
+      <div class="card">
+        <div  class="col-md-4">
+          <button  [disabled]="disabled"  
+          type="button" class="btn   addbtn w-100 h-50 mt-4 " color="primary" (click)="fileInput.click()">
+            <span>Upload Image</span>
+            <input #fileInput type="file"   
+            accept="video/*,image/*" (change)="onFileSelected($event)" style="display:none;" />
+          </button>  
+          </div>
+        <div class="row" style="padding: 30px;">
+          
+          <!-- Images when images array has elements -->
+          <ng-container *ngIf="images && images.length > 0">
+            <div *ngFor="let item of ArticleImages; let i = index" style="width: 2%;" class="col-4">
+              <div class="image-area text-center bg-white" style="margin: 8px;">
+                <img [src]="item.image" height="200" width="200" (click)="OpenImage(item.image)">
+                <a class="remove-image" appActionDelete (click)="deleteArticleImage(item.id)" style="display: inline;">&#215;</a>
+                <br>
+                <p style="font-size: medium;">{{ item.title }}</p>
+              </div>
+            </div>
+          </ng-container>
 
-
-image-popup.component.html
-<div class="modal-header">
-    <h4 class="modal-title">Images for Article {{ articleId }}</h4>
-    <div class="modal-body">
-        <input type="file" #fileInput>
-        <button (click)="uploadImage(fileInput.files[0])">Upload Image</button>
-      </div>
-    <button type="button" class="close" (click)="activeModal.dismiss()">
-    <span>&times;</span>
-    </button>
-    </div>
-    <div class="modal-body">
-    <div class="row">
-    <div class="col-4" *ngFor="let image of images">
-    <img [src]="url+image.image" alt="Image" class="img-fluid" />
-    </div>
-    </div>
-    </div> -->
-    <div class="modal-header">
-        <h4 class="modal-title">Images for Article {{ articleId }}</h4>
-        <button type="button" class="close" (click)="activeModal.dismiss()">
-          <span>&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-4" *ngFor="let image of images">
-            <img [src]="url+image.image" alt="Image" class="img-fluid" />
-            <button type="button" class="btn btn-primary" (click)="saveImage(image.image)">
-              Save Image
-            </button>
+          <!-- Message when there are no images -->
+          <div *ngIf="images && images.length === 0">
+            No images available.
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
