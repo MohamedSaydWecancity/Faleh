@@ -41,6 +41,7 @@ import { environment } from "src/environments/environment";
     public dropdownSettings: IDropdownSettings = {};
     public dropdownList: any = [];
     selectedCateogries = [];
+
     id: any;
 
     constructor(
@@ -53,40 +54,13 @@ import { environment } from "src/environments/environment";
       this.initiate()
     }
 
-    // ngOnInit(): void {
-    //   this.GetCategoies();
-      
-
-    //   let id = this._activatedRoute.snapshot.params['id']
-    //   console.log(id);
-    //   debugger
-    //   if (id) {
-    //   this.id=id
-
-    //     this._articleApiService.getArticleById(Number(id)).subscribe((res) => {
-    //       this.article = res.data;
-    //       this.imageSrc = `${environment.url}/${this.article.image}`;  // Construct full URL
-    //       this.initiate(this.article); // Pass the article object to initiate() method
-    //       this.update = true;
-    //       console.log(this.update)
-    //       this.InsertForm.addControl('id', new FormControl(this.article.id));
-
-    //     });
-      
-    //   }
-    //   else {
-    //     this.update = false;
-    //   this.initiate();
-    //   }
-
-    // }
+    
     ngOnInit(): void {
       this.GetCategoies();
           
       let id = this._activatedRoute.snapshot.params['id']
       if (id) {
         this.id=id
-    
         this._articleApiService.getArticleById(Number(id)).subscribe((res) => {
           this.article = res.data;
           this.imageSrc = `${environment.url}/${this.article.image}`;  
@@ -107,6 +81,8 @@ import { environment } from "src/environments/environment";
   
 
     private initiate(article?: any) {
+           // Initialize selectedCateogries property
+      this.selectedCateogries = article?.articleCategories?.map(category => category.id) || [];
       this.InsertForm = this.fb.group({
         titleAr: [article?.titleAr||"", Validators.required],
         title: [article?.title||"", Validators.required],
@@ -143,8 +119,7 @@ import { environment } from "src/environments/environment";
         image$: [article?.articleImage||""],
         categoriesIds: [this.selectedCateogries || []],
       });
-       // Initialize selectedCateogries property
-  this.selectedCateogries = article?.articleCategories?.map(category => category.id) || [];
+  
     }
      
      

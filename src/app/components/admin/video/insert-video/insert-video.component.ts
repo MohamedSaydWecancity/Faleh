@@ -33,6 +33,7 @@ export class InsertVideoComponent implements OnInit {
   public submit: boolean = true;
   public dropdownSettings: IDropdownSettings = {};
   public dropdownList: any = [];
+
   
   public selectedCateroriesItems: any = [];
   
@@ -61,7 +62,6 @@ export class InsertVideoComponent implements OnInit {
     
     let id = this.route.snapshot.params['id']
    
-    debugger
     if (id) {
     this.id=id
       this.getVideoById(id)
@@ -76,6 +76,7 @@ export class InsertVideoComponent implements OnInit {
   }
 
   initForm(video?: any) {
+    this.selectedCateogries = video?.videoCategories?.map(category => category.id) || [];
     this.InsertForm = this._formBuilder.group({
       Title: [video?.title || '', Validators.required],
       TitleAr: [video?.titleAr || '', Validators.required],
@@ -91,6 +92,7 @@ export class InsertVideoComponent implements OnInit {
       itemsShowLimit: 3,
       allowSearchFilter: true,
     };
+
   }
   public getVideoUrl(event: any) {
     const reader = new FileReader();
@@ -115,6 +117,7 @@ export class InsertVideoComponent implements OnInit {
       this.initForm(this.video$);
       this.imgURL = environment.serverFirstHalfOfImageUrl + this.video$?.videoPath;
       this.InsertForm.addControl('id', new FormControl(this.video$.id));
+      
 
       console.log( this.InsertForm);
       

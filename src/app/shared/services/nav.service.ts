@@ -94,12 +94,13 @@ export class NavService implements OnDestroy {
   }
 
   MENUITEMS_Faleh: Menu[] = [
+    
     {
       headTitle1: "Faleh",
       headTitle2: "Management ",
     },
     {
-      title: "article",
+      title: "اداره المقالات",
       icon: "activity",
       type: "sub",
       badgeType: "success",
@@ -108,35 +109,45 @@ export class NavService implements OnDestroy {
         
         {
           path: "admin/ListArticle",
-          title: "View-article",
+          title: "قائمه المقالات",
+          type: "link",
+        },
+        {
+          path: "admin/insert-article",
+          title: "اضافه مقال",
           type: "link",
         },
       ],
     },
     {
-      title: "Category",
+      title: "اداره التصنيفات",
       icon: "activity",
       type: "sub",
       badgeType: "success",
       children: [
         {
           path: "admin/ListCategory",
-          title: "View-category",
+          title: "قائمه التصنيفات",
           type: "link",
         }
-       
+        ,
+        {
+          path: "admin/insert-category",
+          title: "اضافه تصنيف",
+          type: "link",
+        }
       ],
     }
     ,
     {
-      title: "Question",
+      title: "اداره الاسئله",
       icon: "activity",
       type: "sub",
       badgeType: "success",
       children: [
         {
           path: "admin/ListQuestion",
-          title: "view-question",
+          title: "قائمه الاسئله",
           type: "link",
         }
        
@@ -144,14 +155,14 @@ export class NavService implements OnDestroy {
     }
     ,
     {
-      title: "KeyWord",
+      title: "اداره الكلمات الدلاليه",
       icon: "activity",
       type: "sub",
       badgeType: "success",
       children: [
         {
           path: "admin/ListKeyword",
-          title: "View-keyword",
+          title: "قائمه الكلمات الدلاليه",
           type: "link",
         }
        
@@ -159,14 +170,14 @@ export class NavService implements OnDestroy {
     }
     ,
     {
-      title: "customers",
+      title: "اداره العملاء",
       icon: "activity",
       type: "sub",
       badgeType: "success",
       children: [
         {
           path: "admin/ListCusotmers",
-          title: "View-customer",
+          title: "قائمه العملاء",
           type: "link",
         }
        
@@ -174,29 +185,53 @@ export class NavService implements OnDestroy {
     }
     ,
     {
-      title: "News",
+      title: "اداره الاخبار",
       icon: "activity",
       type: "sub",
       badgeType: "success",
       children: [
         {
           path: "admin/ListNews",
-          title: "View-News",
+          title: "قائمه الاخبار",
           type: "link",
         }
        
       ],
-    }
-    ,
+    },
+    
     {
-      title: "Users",
+      title: "اداره المستخدمين",
       icon: "activity",
       type: "sub",
       badgeType: "success",
       children: [
         {
           path: "admin/ListUsers",
-          title: "View-users",
+          title: "قائمه المستخدمين",
+          type: "link",
+        },
+        {
+          path: "admin/insert-user",
+          title: "ادخال مستخدم",
+          type: "link",
+        }
+       
+      ],
+    },
+    {
+      title: "اداره الفيديو",
+      icon: "activity",
+      type: "sub",
+      badgeType: "success",
+      children: [
+        {
+          path: "admin/ListVideos",
+          title: "قائمه الفديوهات",
+          type: "link",
+        },
+        {
+          path: "admin/insert-video",
+          title: "ادخال فيديو",
           type: "link",
         }
        
