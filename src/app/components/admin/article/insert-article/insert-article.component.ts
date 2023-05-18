@@ -53,50 +53,76 @@ import { environment } from "src/environments/environment";
       this.initiate()
     }
 
+    // ngOnInit(): void {
+    //   this.GetCategoies();
+      
+
+    //   let id = this._activatedRoute.snapshot.params['id']
+    //   console.log(id);
+    //   debugger
+    //   if (id) {
+    //   this.id=id
+
+    //     this._articleApiService.getArticleById(Number(id)).subscribe((res) => {
+    //       this.article = res.data;
+    //       this.imageSrc = `${environment.url}/${this.article.image}`;  // Construct full URL
+    //       this.initiate(this.article); // Pass the article object to initiate() method
+    //       this.update = true;
+    //       console.log(this.update)
+    //       this.InsertForm.addControl('id', new FormControl(this.article.id));
+
+    //     });
+      
+    //   }
+    //   else {
+    //     this.update = false;
+    //   this.initiate();
+    //   }
+
+    // }
     ngOnInit(): void {
       this.GetCategoies();
-      
-
+          
       let id = this._activatedRoute.snapshot.params['id']
-      console.log(id);
-      debugger
       if (id) {
-      this.id=id
-
+        this.id=id
+    
         this._articleApiService.getArticleById(Number(id)).subscribe((res) => {
           this.article = res.data;
-          this.imageSrc = `${environment.url}/${this.article.image}`;  // Construct full URL
-          this.initiate(this.article); // Pass the article object to initiate() method
+          this.imageSrc = `${environment.url}/${this.article.image}`;  
+          this.initiate(this.article); 
           this.update = true;
-          console.log(this.update)
           this.InsertForm.addControl('id', new FormControl(this.article.id));
-
+    
+          // Set dropdownList to articleCategories
+          this.dropdownList = this.article.articleCategories; 
         });
-      
       }
       else {
         this.update = false;
-      // this.checkEdit();
-      this.initiate();
+        this.initiate();
       }
-
     }
 
   
 
     private initiate(article?: any) {
-      console.log(article)
       this.InsertForm = this.fb.group({
         titleAr: [article?.titleAr||"", Validators.required],
         title: [article?.title||"", Validators.required],
         contentAr: [article?.contentAr||"", Validators.required],
         content: [article?.content||"", Validators.required],
         articleVideo: [article?.video||""],
-        // articleImage: [article.titleAr||""],
         image$: [article?.articleImage||""],
 
         categoriesIds: [article?.categoriesIds||null],
+        
       });
+     
+    // Initialize articleVideo and articleImage properties
+    this.articleVideo = article?.articleVideo || null;
+    this.articleImage = article?.articleImage || null;
+
 
 
       this.dropdownSettings = {
@@ -117,13 +143,17 @@ import { environment } from "src/environments/environment";
         image$: [article?.articleImage||""],
         categoriesIds: [this.selectedCateogries || []],
       });
+       // Initialize selectedCateogries property
+  this.selectedCateogries = article?.articleCategories?.map(category => category.id) || [];
     }
+     
      
       public getLogoUrl(event: any) {
         const file = event.target.files[0];
         this.InsertForm.patchValue({
-          articleImage: file
+          image$: file
         });
+        this.articleImage = file;
       
         // Show preview image
         const reader = new FileReader();
@@ -131,8 +161,12 @@ import { environment } from "src/environments/environment";
           this.imageSrc = reader.result as string;
         };
         reader.readAsDataURL(file);
-      }
       
+        // Append image to logoForm
+        if (!this.update) {
+          this.logoForm.append("articleImage", this.articleImage);
+        }
+      }
       
     public getVideoUrl(event: any) {
       const reader = new FileReader();
@@ -157,6 +191,8 @@ import { environment } from "src/environments/environment";
     private GetCategoies() {
       this._catergoryApiService.getMainForList().subscribe((res) => {
         this.dropdownList$ = res.data;
+          // Set dropdownList to articleCategories
+  this.dropdownList = this.article.articleCategories;
       });
     }
 
@@ -216,7 +252,7 @@ import { environment } from "src/environments/environment";
     }
 
     onSubmit() {
-    debugger
+    
       if (!this.InsertForm.invalid ) {
         if (this.update) {
           this.editData();
@@ -247,8 +283,11 @@ import { environment } from "src/environments/environment";
       if (this.articleVideo != null ) {
         this.logoForm.append("articleVideo", this.articleVideo);
       }
-      if (this.articleImage != null) {
-        this.logoForm.append("articleImage", this.articleImage);
+      // if (this.articleImage != null) {
+      //   this.logoForm.append("articleImage", this.articleImage);
+      // }
+      if (this.InsertForm.value.image$ != null) {
+        this.logoForm.append("articleImage", this.InsertForm.value.image$);
       }
     }
   }

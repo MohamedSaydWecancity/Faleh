@@ -4,7 +4,6 @@ import { RouterModule, Routes } from "@angular/router";
 
 
 
-import { ViewProductComponent } from './product/view-product/view-product.component';
 import { ListArticleComponent } from "./article/list-article/list-article.component";
 import { InsertArticleComponent } from "./article/insert-article/insert-article.component";
 import { ListCategoryComponent } from "./category/list-category/list-category.component";
@@ -30,10 +29,7 @@ const routes: Routes = [
         children: [
             
 
-            {
-                path: "ViewProduct",
-                component: ViewProductComponent,
-            },
+          
            {
             path :"content/admin/ListArticle",
             component:ListArticleComponent
