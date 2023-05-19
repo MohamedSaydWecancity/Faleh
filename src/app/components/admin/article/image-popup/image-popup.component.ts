@@ -42,9 +42,10 @@ public url: string = url;
   imagesView: string | ArrayBuffer;
   Image: File;
   ShowPhoto: boolean;
-  public disabled :boolean=true;
+  disabled :boolean=false;
   Loader:boolean=true;
-  serverimage:"https://falehapi.wecancity.com/"
+  serverimage:"https://falehapi.wecancity.com/";
+  imagePath:any = ""; 
 
   constructor(public activeModal: NgbActiveModal,
      public modalService: NgbModal,
@@ -64,6 +65,7 @@ public url: string = url;
   initForm() {
     this.insertForm = this._formBuilder.group({
       title: ['', Validators.required],
+      image: ['', Validators.required],
     });
   }
 
@@ -79,7 +81,6 @@ public url: string = url;
   }
   GetArticleImages(articleId)
   {
-    console.log(articleId)
     this.articleApiService.getImagesByArticleId(articleId).subscribe(res=>{
       this.ArticleImages=res.data;
       this.ArticleImages.forEach(element => {
@@ -115,7 +116,7 @@ public url: string = url;
     this.insertForm.reset();
     this.imagesView="";
     this.modalService.dismissAll();
-    //this._Router.navigate(['/content/admin/ListArticle'])
+    this._Router.navigate(['/content/admin/ListArticle']);
   }
   onFileSelected(event:any) {
     // this.element = element
@@ -124,18 +125,10 @@ public url: string = url;
     var files = event.target.files;
     this.Image = files[0];
     const reader = new FileReader();
-    // this.imagePath = files;   
-    const video = "video";
-    if(files[0].type?.includes(video)){
-      this.ShowPhoto=false;
-    }
-    else{
-     this.ShowPhoto=true;
-    }
     reader.readAsDataURL(files[0]);
     reader.onload = () => {
       this.images.push(files[0]);
-      
+      this.imagePath = reader.result;   
       this.imagesView = reader.result;
     }
   }
@@ -187,30 +180,63 @@ public url: string = url;
       confirmButtonText:"الغاء"
     })
   }
+  
+  formdata(){
+    this.CreatMediaArticlePicForm.append("ArticleImage", this.Image);
+    this.CreatMediaArticlePicForm.append("title", this.insertForm.value.title);
+    this.CreatMediaArticlePicForm.append("ArticleId", this.ArticleId);
+  }
   Submit(){
-    this.CreatMediaArticlePicForm.set("ArticleImage", this.Image);
-    this.CreatMediaArticlePicForm.set('title',this.insertForm.get('title').value)
-    this.CreatMediaArticlePicForm.set('ArticleId',this.ArticleId)
-    this.articleApiService.createArticleImage(this.CreatMediaArticlePicForm).subscribe(
-      (response) => {
-      Swal.fire({
-      icon: "success",
-      title: "تم الحفظ بنجاح",
-      showConfirmButton: false,
-      timer: 1500,
-      });
-      this.GetArticleImages(this.ArticleId);
-      this.insertForm.reset();
-      this.imagesView=null;
-      this.images=[];
-      this.onFileSelected(null);
-    },
-      (err) => {
+    if( this.insertForm.status == "VALID"){
+      this.formdata();
+      this.articleApiService.createArticleImage(this.CreatMediaArticlePicForm).subscribe(
+        (response) => {
         Swal.fire({
-          icon: "error",
-          title:err.error.message
+        icon: "success",
+        title: "تم الحفظ بنجاح",
+        showConfirmButton: false,
+        timer: 1500,
+        });
+        this.GetArticleImages(this.ArticleId);
+        this.insertForm.reset();
+        this.imagesView=null;
+        this.images=[];
+        this.onFileSelected(null);
+      },
+        (err) => {
+          Swal.fire({
+            icon: "error",
+            title:err.error.message
+            });
+        }); this.formdata();
+        this.articleApiService.createArticleImage(this.CreatMediaArticlePicForm).subscribe(
+          (response) => {
+          Swal.fire({
+          icon: "success",
+          title: "تم الحفظ بنجاح",
+          showConfirmButton: false,
+          timer: 1500,
           });
-      });
+          this.GetArticleImages(this.ArticleId);
+          this.insertForm.reset();
+          this.imagesView=null;
+          this.images=[];
+          this.onFileSelected(null);
+        },
+          (err) => {
+            Swal.fire({
+              icon: "error",
+              title:err.error.message
+              });
+          });
+    }else{
+       Swal.fire({
+          icon: "error",
+          title: "تأكد من ارفاق الصورة",
+          showConfirmButton: true,
+          });
+      }
+   
   }
   fetchImages() {
     this.articleApiService.getImagesByArticleId(this.articleId).subscribe(
@@ -222,27 +248,26 @@ public url: string = url;
     );
   }
 
-  uploadImage(file: File) {
-    const formData = new FormData();
-    formData.append('articleId', this.articleId.toString());
-    formData.append('image', file, file.name);
-
-    this.articleApiService.createArticleImage(formData).subscribe(
-      (response: GenericResponse<ArticleImages>) => {
-        if (response.success) {
-          // Image uploaded successfully
-          // Add the newly uploaded image to the newImages array
-          this.newImages.push({ image: response.data.image });
-          // Add the newly uploaded image to the images array
-          this.images.push({ image: response.data.image });
-        } 
-      },
-      (error) => {
-        // Handle HTTP error
-        console.error(error);
-      }
-    );
-  }
+  // uploadImage(file: File) {
+  //   const formData = new FormData();
+  //   formData.append('articleId', this.articleId.toString());
+  //   formData.append('image', file, file.name);
+  //   this.articleApiService.createArticleImage(formData).subscribe(
+  //     (response: GenericResponse<ArticleImages>) => {
+  //       if (response.success) {
+  //         // Image uploaded successfully
+  //         // Add the newly uploaded image to the newImages array
+  //         this.newImages.push({ image: response.data.image });
+  //         // Add the newly uploaded image to the images array
+  //         this.images.push({ image: response.data.image });
+  //       } 
+  //     },
+  //     (error) => {
+  //       // Handle HTTP error
+  //       console.error(error);
+  //     }
+  //   );
+  // }
 
   saveImage(imageUrl: string) {
     const image = this.images.find(img => img.image === imageUrl);

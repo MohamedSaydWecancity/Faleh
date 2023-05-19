@@ -1,24 +1,68 @@
 <div class ="Mdak-header">
-  <button type="button" class="btn btn-danger float-left mr-3" 
-  [disabled]="!disabled" (click)="modalclose()" >رجوع</button>
-  <button  type="button" style="height: 35px;" class="btn  float-left" 
-  [disabled]="disabled" (click)="Submit();">حفظ</button>
+  <button type="button" class="btn btn-danger mr-3"  (click)="modalclose()" >رجوع</button>
+  <br><br>
+  
 </div>
 <div class="modal-body">
   <div class="row">
     <!-- ...other content -->
     <div class="col-sm-12">
       <div class="card">
-        <div  class="col-md-4">
-          <button  [disabled]="disabled"  
-          type="button" class="btn   addbtn w-100 h-50 mt-4 " color="primary" (click)="fileInput.click()">
+        <!-- <div  class="col-md-4">
+          <button   [disabled]="disabled"
+          type="button" class="btn bg-danger addbtn w-100 h-50 mt-4 " color="primary" (click)="fileInput.click()">
             <span>Upload Image</span>
             <input #fileInput type="file"   
-            accept="video/*,image/*" (change)="onFileSelected($event)" style="display:none;" />
+            accept="image/*" (change)="onFileSelected($event)" style="display:none;" />
           </button>  
+          <input type="text" ngModel="title" class="bg-success">
+          </div> -->
+<!-- ============================================================= -->
+<form [formGroup]="insertForm"   (ngSubmit)="Submit()">
+  <div class="card-body container row p-0  col-12">
+      <div class="col-12 col-md-8 row">
+          <!-- name -->
+          <div class="col-12 col-sm-12">
+              <div class="form-group mb-3">
+                  <label >اكتب عنوان الصورة </label>
+                  <input class="form-control"  type="text" placeholder="عنوان الصورة"
+                      formControlName="title" disableEnglish
+                      [tooltip]="fc.title.errors?.required ? 'أسم تصنيف الخدمات باللغة العربية مطلوب' : null"
+                      [isDisabled]="!(fc.title.errors?.required && fc.title.touched)"
+                      containerClass=""
+                      [class.is-valid]="fc.title.valid && (fc.title.touched)"
+                      [class.is-invalid]="fc.title.invalid && (fc.title.touched)" />
+              </div>
           </div>
+      </div>
+
+      <!-- image -->
+      <div class="col-12 d-flex align-items-center">
+          <div class="col-12">
+              <div class="col-12 my-3 d-flex justify-content-center">
+                  <img src="{{ imagePath }}" class="image-style" width="250" height="250" *ngIf="this.imagePath != '' "/>
+              </div>
+              <div class="col-12 ChangeProfilePhoto-block d-flex justify-content-center">
+                  <!--  -->
+                  <input type="file" formControlName="image" #file accept="image/*"
+                      id="getFile" style="display: none" (change)="onFileSelected($event)" />
+                  <button type="button" onclick="document.getElementById('getFile').click()"
+                      class="btn btn-danger">
+                      اضف صورة للتصنيف
+                  </button>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-danger mr-3">حفظ</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  
+
+</form>
+<!-- ============================================================= -->
         <div class="row" style="padding: 30px;">
-          
           <!-- Images when images array has elements -->
           <ng-container *ngIf="images && images.length > 0">
             <div *ngFor="let item of ArticleImages; let i = index" style="width: 2%;" class="col-4">
